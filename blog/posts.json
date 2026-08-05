@@ -1,0 +1,32 @@
+@'
+[
+  {
+    "title": "Quantum Computing: Exam Review",
+    "date": "2026-04-14",
+    "meta": "Teaching Assistant material · CS 580Q · Spring 2026",
+    "description": "Review material for the CS 580Q quantum computing course.",
+    "url": "quantum-computing/26s-review.html"
+  },
+  {
+    "title": "Quantum Computing: Final Project Guidelines",
+    "date": "2026-04-14",
+    "meta": "Teaching Assistant material · CS 580Q · Spring 2026",
+    "description": "Guidelines for the code and survey final projects.",
+    "url": "quantum-computing/26s-final-project-guidelines.html"
+  },
+  {
+    "title": "Introduction to Python",
+    "date": "2022-04-01",
+    "meta": "Teaching materials · Spring 2022",
+    "description": "Course notes, exercises, and answer materials developed while I was a lecturer at Jiangxi University of Software Professional Technology.",
+    "url": "intro-to-python/"
+  },
+  {
+    "title": "CS 5805: Machine Learning",
+    "date": "2023-11-16",
+    "meta": "Coursework and technical experiments · Fall 2023",
+    "description": "A collection of machine-learning coursework and experiments, marking the beginning of my experiments with Quarto.",
+    "url": "cs5805-fall-2023/"
+  }
+]
+'@ | Set-Content -Path ".\blog\posts.json" -Encoding UTF8
