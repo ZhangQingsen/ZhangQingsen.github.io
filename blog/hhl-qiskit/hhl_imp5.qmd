@@ -1,0 +1,237 @@
+---
+title: "HHL Algorithm Implementation in Qiskit - Complete Version"
+author: "Qingsen Zhang"
+date: "2025-01-31"
+categories: ['Python', 'Quantum Computing']
+description: "A complete numerical implementation of the HHL algorithm using Qiskit."
+format: 
+  html:
+    code-fold: true
+    toc: true
+    embed-resources: true
+execute: 
+  message: false
+  warning: false
+editor_options: 
+  chunk_output_type: console
+---
+
+# HHL Algorithm Implementation in Qiskit
+
+## Introduction
+
+This document provides a step-by-step implementation of the HHL algorithm using Qiskit. The algorithm is broken into four key phases:
+
+1. **State Preparation**
+2. **Quantum Phase Estimation (QPE)**
+3. **Controlled Rotation & Measurement of the Ancilla Qubit**
+4. **Uncomputation (Inverse QPE)**
+5. **Complete HHL Implementation**
+
+```{python}
+
+# Import necessary libraries
+import qiskit
+import numpy as np
+from numpy import pi
+from qiskit import ClassicalRegister, QuantumRegister, QuantumCircuit, transpile
+from qiskit_aer import Aer
+from qiskit.circuit.library import UnitaryGate, QFT, RYGate, MCXGate
+from scipy.linalg import expm
+
+# previous functions
+def state_prep(mat_A, vec_b, n_c=1):
+  N_b = vec_b.shape[0]
+  n_b = int(np.log2(N_b))
+  qr_b = QuantumRegister(n_b, name='b')  # b-register
+  qr_c = QuantumRegister(n_c, name='c')  # c-register
+  qr_a = QuantumRegister(1, name='a')    # a-register
+  qc = QuantumCircuit(qr_c, qr_b, qr_a)  # complete circuit
+
+  norm_b = vec_b / np.linalg.norm(vec_b)
+  qc.initialize(norm_b, qr_b)
+  return qc, qr_b, qr_c, qr_a
+
+def phase_estimation(qc, qr_b, qr_c, mat_A, t):
+    n_c = len(qr_c)
+    
+    # 1. Hadamard on c-register
+    qc.h(qr_c)
+    
+    # 2. Apply controlled-U^(2^j) operations
+    U = expm(1j * t * mat_A)  # 计算 e^(iAt)
+    U_gate = UnitaryGate(U, label="e^{iAt}")  # 创建 U gate
+  
+    for j in range(n_c):
+        power = 2**j  # 计算 U^(2^j)
+        controlled_U_pow = U_gate.power(power).control(1)  # 控制操作
+        qc.append(controlled_U_pow, [qr_c[j], *qr_b]) 
+    
+    # 3. Apply IQFT on c-register
+    iqft = QFT(num_qubits=n_c, do_swaps=False).inverse()
+    qc.append(iqft, qr_c)  # 作用于 c-register
+    
+    return qc
+
+def controlled_rotation(qc, qr_c, qr_a, C, t, n_c):
+    """
+    实现受控旋转门，作用于 a-register，基于 c-register 的相位估计结果
+    :param qc: 量子电路（需已经过相位估计到 |psi_4> 状态）
+    :param qr_c: c-register（存储相位估计结果）
+    :param qr_a: a-register（辅助比特）
+    :param C: 缩放常数
+    :param t: 时间参数（用于计算真实特征值）
+    :param n_c: c-register 的量子比特数
+    """
+    # 遍历所有可能的相位估计结果 k（从1到2^n_c -1）
+    for k in range(1, 2**n_c):
+        # Step 1: 将二进制状态k转换为控制条件（设置X门）
+        # 保存需要翻转的量子比特索引
+        flip_qubits = []
+        for i in range(n_c):
+            if (k & (1 << i)) == 0:  # 如果第i位是0，需要翻转
+                qc.x(qr_c[i])
+                flip_qubits.append(i)
+        
+        # Step 2: 计算旋转角度 theta_j
+        # 计算相位 phi（注意处理补码）
+        phi = k / (2**n_c)
+        if k > 2**(n_c - 1):
+            phi -= 1.0  # 处理负相位（二进制补码）
+        
+        # 计算真实特征值 lambda_j = (2π / t) * phi
+        lambda_j = (2 * np.pi / t) * phi
+        
+        # 计算旋转角度 theta_j = 2*arcsin(C / lambda_j)
+        if abs(lambda_j) > 1e-8:  # 避免除以零
+            theta_j = 2 * np.arcsin(C / lambda_j)
+        else:
+            theta_j = 0  # 若lambda_j太小，跳过旋转
+        
+        # Step 3: 应用多控制 RY 门到 a-register
+        if abs(theta_j) > 1e-8:  # 仅当角度有效时应用
+            ry_gate = RYGate(theta_j).control(num_ctrl_qubits=n_c, ctrl_state='1'*n_c)
+            qc.append(ry_gate, qr_c[:] + [qr_a[0]])
+        
+        # Step 4: 恢复被翻转的量子比特
+        for i in flip_qubits:
+            qc.x(qr_c[i])
+
+    return qc
+
+def uncomputation(qc, qr_b, qr_c, qr_a, mat_A, t, n_c):
+    """
+    Complete uncomputation phase (Phase 4) of HHL algorithm
+    """
+    # Step 1: Apply QFT on c-register
+    qc.append(QFT(n_c, do_swaps=False), qr_c)
+    
+    # Step 2: Inverse controlled-U operations
+    U_inv = expm(-1j * t * mat_A)
+    U_gate_inv = UnitaryGate(U_inv, label="e^{-iAt}")
+    
+    for j in reversed(range(n_c)):
+        power = 2**j
+        controlled_U_pow_inv = U_gate_inv.power(power).control(1)
+        qc.append(controlled_U_pow_inv, [qr_c[j], *qr_b])
+    
+    # Step 3: Apply Hadamard on c-register
+    qc.h(qr_c)
+    
+    return qc
+```
+
+```{python}
+def hhl_algorithm(mat_A, vec_b, n_c=1, t=np.pi/8, C=0.01):
+    """
+    Complete HHL algorithm implementation
+    Returns: quantum circuit and registers
+    """
+    # Phase 1: State Preparation
+    qc, qr_b, qr_c, qr_a = state_prep(mat_A, vec_b, n_c=n_c)
+    
+    # Phase 2: Quantum Phase Estimation
+    qc = phase_estimation(qc, qr_b, qr_c, mat_A, t)
+    
+    # Phase 3: Controlled Rotation
+    qc = controlled_rotation(qc, qr_c, qr_a, C, t, n_c)
+    
+    # Phase 4: Uncomputation
+    qc = uncomputation(qc, qr_b, qr_c, qr_a, mat_A, t, n_c)
+    
+    return qc, qr_b, qr_c, qr_a
+```
+
+### Numerical Example
+$A=\begin{bmatrix}1 & -\frac{1}{3}\\-\frac{1}{3} & 1\end{bmatrix}$  
+$\vec{b}=\begin{bmatrix}0\\1\end{bmatrix}$
+
+### Variables
+$n_b$: # of qubits in `b-register` 
+
+$N_b=2^{n_b}$: # of unknows (length of $\vec{b}$, $len(\vec{b})=len(\vec{x})$)
+
+$n_c$: # of qubits in ``c-register``
+
+a larger $n_c$ results in higher accuracy when the encoding is not exact 
+
+$N=2^n$ 
+
+$t=\frac{\pi}{8}$: time variable, should be multiple of $2\pi$ 
+
+```{python}
+mat_A = np.array([[1, -1/3], [-1/3, 1]])
+vec_b = np.array([0,1])
+N_b = 2 # number of variables (b.shape[0])
+n_b = int(np.log2(N_b)) # number of qubits in b-register
+# n_b = 1 # N_b = 2^(n_b), n_b = np.log2(N_b)
+n_c = 1 # number of qubits in c-register
+N_c = 2 # N_c = 2^(n_c)
+t = np.pi/8
+C = 0.01
+```
+
+```{python}
+hhl_circuit, qr_b, qr_c, qr_a = hhl_algorithm(mat_A, vec_b, n_c, t, C)
+
+# Add measurement
+c_b = ClassicalRegister(len(qr_b), name='cb')
+c_a = ClassicalRegister(1, name='ca')
+hhl_circuit.add_register(c_b, c_a)
+hhl_circuit.measure(qr_b, c_b)
+hhl_circuit.measure(qr_a, c_a)
+
+print("Complete HHL Circuit:")
+hhl_circuit.draw(output='mpl')
+```
+
+```{python}
+# Execute HHL algorithm and analyze results
+simulator = Aer.get_backend('statevector_simulator')
+transpiled_circuit = transpile(hhl_circuit, simulator)
+result = simulator.run(transpiled_circuit, shots=1000).result()
+counts = result.get_counts(transpiled_circuit)
+print("Raw measurement counts:", counts)
+
+# Post-selection analysis
+measured_a1 = sum(counts[key] for key in counts if key[-1] == '1')
+measured_a0 = sum(counts[key] for key in counts if key[-1] == '0')
+
+if measured_a1 + measured_a0 > 0:
+    print(f"P(a=1) = {measured_a1 / (measured_a1 + measured_a0):.4f}")
+    print(f"P(a=0) = {measured_a0 / (measured_a1 + measured_a0):.4f}")
+
+# Extract b-register states after post-selection
+filtered_counts = {key[:-1]: count for key, count in counts.items() if key[-1] == '1'}
+total_valid = sum(filtered_counts.values())
+
+if total_valid > 0:
+    print("\nPost-selected b-register states (a=1):")
+    for state, count in filtered_counts.items():
+        probability = count / total_valid
+        print(f"|{state}⟩: {probability:.4f}")
+```
+
+
+
+prev [Uncomputation](./hhl_imp4.html)
