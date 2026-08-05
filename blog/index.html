@@ -22,41 +22,8 @@
         Technical writing, teaching materials, and archived coursework.
       </p>
 
-      <ul class="blog-list">
-        <li>
-          <h2>
-            <a href="quantum-computing/">Quantum Computing</a>
-          </h2>
-          <p class="meta">Teaching materials · CS 580Q · Spring 2026</p>
-          <p>
-            Materials developed while serving as a teaching assistant, including
-            an exam review session and final project guidelines.
-          </p>
-        </li>
-
-        <li>
-          <h2>
-            <a href="intro-to-python/">Introduction to Python</a>
-          </h2>
-          <p class="meta">Teaching materials · Spring 2022</p>
-          <p>
-            Course notes, exercises, and answer materials developed while I was
-            a lecturer at Jiangxi University of Software Professional Technology.
-            These materials are preserved as an archive.
-          </p>
-        </li>
-
-        <li>
-          <h2>
-            <a href="cs5805-fall-2023/">CS 5805: Machine Learning</a>
-          </h2>
-          <p class="meta">Coursework and technical experiments · Fall 2023</p>
-          <p>
-            A collection of machine-learning coursework and experiments covering
-            probability, clustering, regression, classification, and anomaly detection.
-            This collection also marks the beginning of my experiments with Quarto.
-          </p>
-        </li>
+      <ul id="post-list" class="blog-list">
+        <li>Loading...</li>
       </ul>
     </section>
 
@@ -64,5 +31,38 @@
       <p>© 2026 Qingsen Zhang</p>
     </footer>
   </main>
+
+  <script>
+    fetch("posts.json")
+      .then(response => {
+        if (!response.ok) {
+          throw new Error("Could not load posts.json");
+        }
+        return response.json();
+      })
+      .then(posts => {
+        posts.sort((a, b) => new Date(b.date) - new Date(a.date));
+
+        const list = document.getElementById("post-list");
+        list.innerHTML = "";
+
+        for (const post of posts) {
+          const item = document.createElement("li");
+
+          item.innerHTML = `
+            <h2><a href="${post.url}">${post.title}</a></h2>
+            <p class="meta">${post.meta}</p>
+            <p>${post.description}</p>
+          `;
+
+          list.appendChild(item);
+        }
+      })
+      .catch(error => {
+        document.getElementById("post-list").innerHTML =
+          "<li>Unable to load the blog index.</li>";
+        console.error(error);
+      });
+  </script>
 </body>
 </html>
