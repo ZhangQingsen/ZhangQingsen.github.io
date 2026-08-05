@@ -1,6 +1,0 @@
-/.quarto/
-/.venv/
-/.luarc.json
-/.bat
-**/*.quarto_ipynb
-*.bat

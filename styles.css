@@ -1,1 +1,159 @@
-/* css styles */
+﻿:root {
+  --text: #202124;
+  --muted: #5f6368;
+  --line: #e5e7eb;
+  --link: #1558b0;
+  --background: #ffffff;
+  --max-width: 760px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  background: var(--background);
+}
+
+body {
+  margin: 0;
+  color: var(--text);
+  background: var(--background);
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 16px;
+  line-height: 1.65;
+}
+
+.container {
+  width: min(var(--max-width), calc(100% - 40px));
+  margin: 0 auto;
+}
+
+.site-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 28px 0 20px;
+  border-bottom: 1px solid var(--line);
+}
+
+.name {
+  color: var(--text);
+  font-weight: 700;
+  text-decoration: none;
+}
+
+nav {
+  display: flex;
+  gap: 18px;
+}
+
+a {
+  color: var(--link);
+  text-underline-offset: 3px;
+}
+
+nav a {
+  color: var(--text);
+  text-decoration: none;
+}
+
+nav a:hover {
+  text-decoration: underline;
+}
+
+.intro {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+  padding: 54px 0 38px;
+}
+
+.avatar {
+  width: 128px;
+  height: 128px;
+  flex: 0 0 128px;
+  border-radius: 50%;
+  object-fit: cover;
+  background: #f1f3f4;
+}
+
+h1, h2, h3 {
+  line-height: 1.25;
+}
+
+h1 {
+  margin: 0 0 8px;
+  font-size: 2.25rem;
+  letter-spacing: -0.03em;
+}
+
+h2 {
+  margin: 32px 0 10px;
+  font-size: 1.3rem;
+}
+
+p {
+  margin: 0 0 16px;
+}
+
+.lead {
+  color: var(--muted);
+  font-size: 1.1rem;
+}
+
+.links {
+  margin-top: 20px;
+}
+
+.links span {
+  color: var(--muted);
+  padding: 0 5px;
+}
+
+.blog-list {
+  padding: 0;
+  list-style: none;
+}
+
+.blog-list li {
+  padding: 20px 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.blog-list h2 {
+  margin: 0 0 4px;
+  font-size: 1.15rem;
+}
+
+.meta {
+  margin-bottom: 6px;
+  color: var(--muted);
+  font-size: 0.92rem;
+}
+
+footer {
+  margin-top: 70px;
+  padding: 20px 0 35px;
+  border-top: 1px solid var(--line);
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+@media (max-width: 560px) {
+  .intro {
+    align-items: flex-start;
+    gap: 20px;
+    padding-top: 36px;
+  }
+
+  .avatar {
+    width: 84px;
+    height: 84px;
+    flex-basis: 84px;
+  }
+
+  h1 {
+    font-size: 1.8rem;
+  }
+}
