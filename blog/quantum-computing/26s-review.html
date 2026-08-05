@@ -1,0 +1,1006 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CS 580Q Exam Review - Binghamton University</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Markdown Parser -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    
+    <!-- MathJax Configuration -->
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']],
+                processEscapes: true
+            },
+            startup: { typeset: false }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+    <style>
+        /* 1. 基础排版：大字体，护眼浅色背景 */
+        body { 
+            background-color: #f8fbf9; /* 极浅的护眼绿白 */
+            color: #1e293b; 
+            font-family: 'Segoe UI', system-ui, sans-serif; 
+            font-size: 20px; /* 为投影仪设计的大基础字体 */
+            line-height: 1.7;
+        }
+        
+        /* 2. Binghamton 主题色 (#006b54) 与标题排版 */
+        .markdown-body h1 { font-size: 2.8rem; font-weight: 800; color: #006b54; margin-bottom: 1.5rem; padding-bottom: 0.5rem; border-bottom: 3px solid #e2e8f0; }
+        .markdown-body h2 { font-size: 2.0rem; font-weight: 700; color: #006b54; margin-top: 2.5rem; margin-bottom: 1rem; }
+        .markdown-body h3 { font-size: 1.6rem; font-weight: 600; color: #334155; margin-top: 2rem; margin-bottom: 1rem; padding-left: 0.5rem; border-left: 4px solid #006b54; }
+        .markdown-body p, .markdown-body li { font-size: 1.25rem; }
+        .markdown-body ul, .markdown-body ol { margin-left: 2rem; margin-bottom: 1.5rem; }
+        .markdown-body hr { border: 0; border-top: 2px solid #cbd5e1; margin: 3rem 0; }
+        .markdown-body strong { color: #0f172a; font-weight: 700; }
+        
+        /* 3. 数学公式：单独放大，使用深蓝色突出 */
+        mjx-container {
+            font-size: 125% !important; /* 公式比普通字大25% */
+            color: #1e40af !important;  /* 沉稳的深海蓝 */
+        }
+
+        /* 4. 交互式折叠卡片 (点击显示的答案) */
+        details.reveal { 
+            background: #ffffff; 
+            border: 1px solid #cbd5e1;
+            border-left: 6px solid #006b54; 
+            border-radius: 0.5rem; 
+            margin: 1.5rem 0; 
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+            transition: all 0.2s ease; 
+        }
+        details.reveal.final { border-left-color: #d97706; } /* Final Answer 用深橘色 */
+        details.reveal.exercise { border-left-color: #4f46e5; } /* Exercise Answer 用靛蓝色 */
+        
+        details.reveal summary { 
+            padding: 1.2rem; 
+            font-size: 1.2rem;
+            font-weight: 700; 
+            cursor: pointer; 
+            background: #f1f5f9; 
+            outline: none; 
+            list-style: none; 
+            color: #006b54; 
+            border-radius: 0.5rem;
+        }
+        details.reveal.final summary { color: #d97706; }
+        details.reveal.exercise summary { color: #4f46e5; background: #eef2ff;}
+        
+        details.reveal summary::-webkit-details-marker { display: none; }
+        details.reveal summary::before { content: '▶'; margin-right: 0.75rem; font-size: 1rem; display: inline-block; transition: transform 0.2s; }
+        details.reveal[open] summary::before { transform: rotate(90deg); }
+        details.reveal[open] summary { border-bottom-left-radius: 0; border-bottom-right-radius: 0; border-bottom: 1px solid #cbd5e1; }
+        
+        .details-content { padding: 1.5rem; background: #ffffff; border-radius: 0 0 0.5rem 0.5rem; }
+        
+        /* 表格与高亮区块 */
+        table { width: 100%; border-collapse: collapse; margin: 2rem 0; font-size: 1.2rem; background: white;}
+        th, td { border: 1px solid #cbd5e1; padding: 1rem; text-align: left; }
+        th { background: #006b54; color: white; }
+        code { font-size: 1.1rem; background: #e2e8f0; padding: 0.2rem 0.4rem; border-radius: 4px; color: #b91c1c; }
+    </style>
+</head>
+<body class="flex h-screen overflow-hidden">
+
+    <!-- 侧边栏：Binghamton 绿色背景 -->
+    <nav class="w-80 bg-[#006b54] flex flex-col h-full shadow-2xl relative z-10">
+        <div class="p-8 border-b border-[#004f3e]">
+            <h1 class="text-3xl font-extrabold text-white tracking-wide">CS 580Q</h1>
+            <p class="text-green-100 text-lg mt-2">Exam Review Session</p>
+        </div>
+        <div id="menu" class="flex-1 overflow-y-auto p-4 space-y-2">
+            <!-- 按钮由 JS 动态生成 -->
+        </div>
+    </nav>
+
+    <!-- 主内容区 -->
+    <main class="flex-1 h-full overflow-y-auto p-12 lg:p-20" id="main-content">
+        <div id="content-area" class="max-w-5xl mx-auto markdown-body pb-32">
+            <!-- 内容渲染区 -->
+        </div>
+    </main>
+
+    <!-- ========================================== -->
+    <!-- 所有的 Markdown 内容数据块 -->
+    <!-- ========================================== -->
+
+<script type="text/markdown" id="md-0">
+# Important Info & Rules
+
+---
+
+## 📅 Important Timeline
+**April 16: Exam Date**
+
+---
+
+## ⚠️ Exam Rules
+- **No Cheat Sheets allowed.**
+- **No Electronic Devices** (phones, tablets, smartwatches, laptops, etc. must be put away).
+- **No Phones** during the exam at any time.
+- **Bring your Calculator.**
+- **No Sharing** of calculators or materials during the exam.
+- **No Leaving the Room**: Once the exam starts, you may not leave the room unless you submit your exam.
+
+---
+
+## 🔗 Course Materials
+The official Exam Review Outline is available on Brightspace:
+[Click here to view Outline on Brightspace](https://brightspace.binghamton.edu/d2l/le/content/515523/viewContent/1813932/View)
+
+*Let's get started with the review! Select a module from the left menu.*
+</script>
+
+<script type="text/markdown" id="md-1">
+# Complex Numbers Review
+
+---
+
+## Problem 1: Complex Conjugate
+
+### Example
+Find the conjugate of  
+\[
+5 + 2i
+\]
+
+### Step 1
+Flip the sign of the imaginary part.
+
+**Answer:**  
+\[
+5 - 2i
+\]
+
+### Exercise
+Find the conjugate of  
+\[
+3 - 4i
+\]
+
+### Exercise Answer
+\[
+3 + 4i
+\]
+
+---
+
+## Problem 2: Addition and Subtraction
+
+### Example
+Compute  
+\[
+(-3+2i)+(4-5i)
+\]
+
+### Step 1
+Add real parts and imaginary parts separately.
+
+**Answer:**  
+\[
+1 - 3i
+\]
+
+### Exercise
+Compute  
+\[
+(8 - 2i) - (5 + 3i)
+\]
+
+### Exercise Answer
+\[
+3 - 5i
+\]
+
+---
+
+## Problem 3: Multiplication
+
+### Example
+Compute  
+\[
+(3+i)(2-i)
+\]
+
+### Step 1
+Expand and use \(i^2=-1\).
+
+**Answer:**  
+\[
+7 - i
+\]
+
+### Exercise
+Compute  
+\[
+(2+2i)(1+i)
+\]
+
+### Exercise Answer
+\[
+4i
+\]
+
+---
+
+## Problem 4: Magnitude Squared
+
+### Example
+Compute \(|z|^2\) for  
+\[
+z = 3 - 4i
+\]
+
+### Step 1
+Use \(|a+bi|^2 = a^2 + b^2\).
+
+**Answer:**  
+\[
+25
+\]
+
+### Exercise
+Compute \(|2+5i|^2\).
+
+### Exercise Answer
+\[
+29
+\]
+
+---
+
+## Problem 5: Division Using Conjugate
+
+### Example
+Compute  
+\[
+\frac{1+i}{1-i}
+\]
+
+### Step 1
+Multiply numerator and denominator by the conjugate of the denominator.
+
+**Answer:**  
+\[
+i
+\]
+
+### Exercise
+Compute  
+\[
+\frac{4+8i}{2+2i}
+\]
+
+### Exercise Answer
+\[
+3 + i
+\]
+
+---
+
+\[
+\boxed{(ab)^* = a^* b^*}
+\]
+
+---
+
+\[
+\boxed{\left(\frac{a}{b}\right)^* = \frac{a^*}{b^*}}
+\]
+</script>
+
+<script type="text/markdown" id="md-2">
+# Dirac Notation Review
+
+---
+
+## Problem 1: Ket to Bra (and Vice Versa)
+
+### Example
+Given the ket $|v\rangle = \begin{pmatrix} 1 \\ i \\ 2 \end{pmatrix}$, find its corresponding bra $\langle v|$.
+
+### Step 1
+Perform the conjugate transpose ($\dagger$): turn the column into a row and change the sign of the imaginary parts.
+
+**Answer:**  
+\[ \langle v| = \begin{pmatrix} 1 & -i & 2 \end{pmatrix} \]
+
+### Exercise
+Given the bra $\langle \phi | = \begin{pmatrix} 1+i & 2 & -3i \end{pmatrix}$, find its corresponding ket $|\phi\rangle$.
+
+### Exercise Answer
+\[ |\phi\rangle = \begin{pmatrix} 1-i \\ 2 \\ 3i \end{pmatrix} \]
+
+---
+
+## Problem 2: Inner Product (Scalar)
+
+### Example
+Using $|v\rangle = \begin{pmatrix} 1 \\ i \\ 2 \end{pmatrix}$ and $|u\rangle = \begin{pmatrix} 2 \\ 1 \\ 0 \end{pmatrix}$, compute the inner product $\langle v|u\rangle$.
+
+### Step 1
+Multiply the row $\langle v|$ by the column $|u\rangle$:
+\[ \langle v|u\rangle = (1 \times 2) + (-i \times 1) + (2 \times 0) \]
+
+**Answer:**  
+\[ 2 - i \]
+
+### Exercise
+Compute $\langle u|v\rangle$.
+
+### Exercise Answer
+\[ \langle u|v\rangle = (2 \times 1) + (1 \times i) + (0 \times 2) = 2 + i \]
+
+---
+
+## Problem 3: Outer Product (Matrix)
+
+### Example
+Using the same vectors $|v\rangle$ and $|u\rangle$, compute the outer product $|v\rangle\langle u|$.
+
+### Step 1
+Multiply the column $|v\rangle$ by the row $\langle u|$ ($3\times 1$ matrix times $1\times 3$ matrix):
+\[ \begin{pmatrix} 1 \\ i \\ 2 \end{pmatrix} \begin{pmatrix} 2 & 1 & 0 \end{pmatrix} = \begin{pmatrix} 1\cdot2 & 1\cdot1 & 1\cdot0 \\ i\cdot2 & i\cdot1 & i\cdot0 \\ 2\cdot2 & 2\cdot1 & 2\cdot0 \end{pmatrix} \]
+
+**Answer:**  
+\[ \begin{pmatrix} 2 & 1 & 0 \\ 2i & i & 0 \\ 4 & 2 & 0 \end{pmatrix} \]
+
+### Exercise
+Compute the outer product $|u\rangle\langle u|$ (this is a projection-style operator).
+
+### Exercise Answer
+\[ \begin{pmatrix} 4 & 2 & 0 \\ 2 & 1 & 0 \\ 0 & 0 & 0 \end{pmatrix} \]
+
+---
+
+## Problem 4: Tensor Product
+
+### Example
+Compute the tensor product $|v\rangle \otimes |u\rangle$ where $|v\rangle = \begin{pmatrix} 1 \\ i \\ 2 \end{pmatrix}$ and $|u\rangle = \begin{pmatrix} 2 \\ 1 \\ 0 \end{pmatrix}$.
+
+### Step 1
+Expand using the Kronecker product: multiply each element of $|v\rangle$ by the entire vector $|u\rangle$.
+\[ \begin{pmatrix} 1 \cdot \begin{pmatrix} 2 \\ 1 \\ 0 \end{pmatrix} \\ i \cdot \begin{pmatrix} 2 \\ 1 \\ 0 \end{pmatrix} \\ 2 \cdot \begin{pmatrix} 2 \\ 1 \\ 0 \end{pmatrix} \end{pmatrix} \]
+
+**Answer:**  
+\[ \begin{pmatrix} 2 \\ 1 \\ 0 \\ 2i \\ i \\ 0 \\ 4 \\ 2 \\ 0 \end{pmatrix} \]
+
+### Exercise
+Compute $\langle v| \otimes \langle u|$.
+
+### Exercise Answer
+\[ \begin{pmatrix} 2 & 1 & 0 & -2i & -i & 0 & 4 & 2 & 0 \end{pmatrix} \]
+</script>
+
+<script type="text/markdown" id="md-3">
+# Linear Algebra Review
+
+---
+
+## 1. Matrix Basic Operations (Formulas)
+
+### Addition and Subtraction
+\[
+\begin{pmatrix} a & b \\ c & d \end{pmatrix} \pm \begin{pmatrix} e & f \\ g & h \end{pmatrix} = \begin{pmatrix} a \pm e & b \pm f \\ c \pm g & d \pm h \end{pmatrix}
+\]
+
+### Transpose ($T$)
+Flip the matrix over its diagonal (rows become columns).
+\[
+\begin{pmatrix} a & b \\ c & d \end{pmatrix}^T = \begin{pmatrix} a & c \\ b & d \end{pmatrix}
+\]
+
+---
+
+## Problem 1: Matrix Multiplication (Real Numbers)
+
+### Example
+Compute $AB$ where:
+\[
+A = \begin{pmatrix} 2 & 0 & 1 \\ 1 & 3 & 2 \end{pmatrix}, \quad 
+B = \begin{pmatrix} 1 & 1 \\ 0 & 2 \\ 2 & 1 \end{pmatrix}
+\]
+
+### Step 1
+Multiply rows of $A$ by columns of $B$:
+
+**Answer:**
+\[
+\begin{pmatrix} 4 & 3 \\ 5 & 9 \end{pmatrix}
+\]
+
+### Exercise
+Compute $CD$ where:
+\[
+C = \begin{pmatrix} 1+i & 0 \\ i & 2 \end{pmatrix}, \quad 
+D = \begin{pmatrix} 1 & i \\ 1-i & 0 \end{pmatrix}
+\]
+
+### Exercise Answer
+\[
+\begin{pmatrix} 1+i & i-1 \\ 2-i & -1 \end{pmatrix}
+\]
+
+---
+
+## Problem 2: Conjugate Transpose (Adjoint/Dagger)
+
+### Formula
+The dagger operator $\dagger$ (also called adjoint) is the combination of complex conjugation and transpose:
+\[
+A^\dagger = (A^*)^T = (A^T)^*
+\]
+
+### Example
+Find $A^\dagger$ for $A = \begin{pmatrix} 2+i & 1 \\ 3i & 4 \end{pmatrix}$.
+
+### Step 1
+**Conjugate**: $\begin{pmatrix} 2-i & 1 \\ -3i & 4 \end{pmatrix}$
+**Transpose**: $\begin{pmatrix} 2-i & -3i \\ 1 & 4 \end{pmatrix}$
+
+**Answer:**
+\[
+\begin{pmatrix} 2-i & -3i \\ 1 & 4 \end{pmatrix}
+\]
+
+### Exercise
+Find $B^\dagger$ for $B = \begin{pmatrix} 1-i & 2i \\ 3 & -i \end{pmatrix}$.
+
+### Exercise Answer
+\[
+\begin{pmatrix} 1+i & 3 \\ -2i & i \end{pmatrix}
+\]
+
+---
+
+## Problem 3: Linear Dependence
+
+### Method
+To check if vectors $\{v_1, v_2, v_3\}$ are **linearly dependent**, find if there exist scalars $c_1, c_2, c_3$ (not all zero) such that:
+\[
+c_1v_1 + c_2v_2 + c_3v_3 = \vec{0}
+\]
+If the only solution is $c_1=c_2=c_3=0$, they are **linearly independent**.
+
+### Example
+Show that $v_1 = \begin{pmatrix} 1 \\ 0 \end{pmatrix}$, $v_2 = \begin{pmatrix} 0 \\ 1 \end{pmatrix}$, and $v_3 = \begin{pmatrix} 1 \\ 1 \end{pmatrix}$ are linearly dependent.
+
+### Step 1
+Set up the equation: $c_1 \begin{pmatrix} 1 \\ 0 \end{pmatrix} + c_2 \begin{pmatrix} 0 \\ 1 \end{pmatrix} + c_3 \begin{pmatrix} 1 \\ 1 \end{pmatrix} = \begin{pmatrix} 0 \\ 0 \end{pmatrix}$.
+
+**Answer:**
+The vectors are linearly dependent because $v_1 + v_2 - v_3 = 0$.
+
+### Exercise
+Show that the vectors $v_1=\begin{pmatrix}2\\-1\end{pmatrix}, v_2=\begin{pmatrix}1\\3\end{pmatrix}, v_3=\begin{pmatrix}5\\0\end{pmatrix}$ are linearly dependent by finding coefficients $c_1, c_2, c_3$.
+
+### Exercise Answer
+One possible solution is $c_1=15, c_2=5, c_3=-7$.
+Check: $15\begin{pmatrix}2\\-1\end{pmatrix} + 5\begin{pmatrix}1\\3\end{pmatrix} - 7\begin{pmatrix}5\\0\end{pmatrix} = \begin{pmatrix}0\\0\end{pmatrix}$.
+
+---
+
+## Problem 4: Orthogonality
+
+### Method
+Two vectors $|v\rangle$ and $|u\rangle$ are **orthogonal** if their inner product is zero:
+\[ \langle v|u\rangle = 0 \]
+
+### Example
+Determine if the vectors $|v\rangle = \begin{pmatrix} 1 \\ i \end{pmatrix}$ and $|u\rangle = \begin{pmatrix} i \\ 1 \end{pmatrix}$ are orthogonal.
+
+### Step 1: Write down the bra $\langle v|$
+Take the conjugate transpose of $|v\rangle$.
+
+**Answer:** 
+$\langle v| = \begin{pmatrix} 1 & -i \end{pmatrix}$
+
+### Step 2: Compute the inner product $\langle v|u\rangle$
+
+**Answer:** 
+$(1)(i) + (-i)(1) = i - i = 0$. Yes, they are orthogonal.
+
+### Exercise
+Determine if the vectors $|v_1\rangle = \begin{pmatrix} 1 \\ i \end{pmatrix}$ and $|v_2\rangle = \begin{pmatrix} 1+i \\ -1+i \end{pmatrix}$ are orthogonal. 
+
+### Exercise Answer
+Inner product = $2+2i$. Since it is not 0, they are **not orthogonal**.
+</script>
+
+<script type="text/markdown" id="md-4">
+# Linear Algebra II: Matrix Properties & Eigensystems
+
+---
+
+## 1. Matrix Properties & Formulas (Reference)
+
+- **Hermitian Matrix**: $H^\dagger = H$. (Eigenvalues are always real).
+- **Unitary Matrix**: $U^\dagger U = I$. (Columns are orthonormal).
+- **Diagonalization Form**: 
+  \[ A = V \Lambda V^\dagger \]
+  - $\Lambda$: Diagonal matrix of eigenvalues.
+  - $V$: Matrix with normalized eigenvectors as columns.
+
+---
+
+## Problem 1: Finding Eigenvalues
+
+### Example
+Find the eigenvalues of the matrix:
+\[ A = \begin{pmatrix} 0 & 1 \\ 1 & 0 \end{pmatrix} \]
+
+### Step 1: Set up the Characteristic Equation
+Write $\det(A - \lambda I) = 0$.
+
+**Answer:** 
+$(0-\lambda)(0-\lambda) - (1)(1) = 0$
+
+### Step 2: Simplify and Solve for $\lambda$
+
+**Answer:** 
+$\lambda^2 - 1 = 0 \Rightarrow \lambda = 1, -1$
+
+### Exercise
+Find the eigenvalues of the matrix:
+\[ B = \begin{pmatrix} 1 & 2 \\ 2 & 1 \end{pmatrix} \]
+
+### Exercise Answer
+\[ \lambda = 3, -1 \]
+
+---
+
+## Problem 2: Finding Normalized Eigenvectors
+
+### Example
+For the matrix $A = \begin{pmatrix} 0 & 1 \\ 1 & 0 \end{pmatrix}$ and the eigenvalue $\lambda = 1$, find the normalized eigenvector.
+
+### Step 1: Set up the system $(A - \lambda I)\mathbf{v} = 0$
+
+**Answer:** 
+$\begin{pmatrix} -1 & 1 \\ 1 & -1 \end{pmatrix} \begin{pmatrix} x \\ y \end{pmatrix} = \begin{pmatrix} 0 \\ 0 \end{pmatrix}$
+
+### Step 2: Find the relationship and normalize
+
+**Answer:** 
+$-x + y = 0 \Rightarrow x = y$. Vector is $\begin{pmatrix} 1 \\ 1 \end{pmatrix}$.
+Normalized Vector: $\frac{1}{\sqrt{2}} \begin{pmatrix} 1 \\ 1 \end{pmatrix}$
+
+### Exercise
+For the matrix $B = \begin{pmatrix} 1 & 2 \\ 2 & 1 \end{pmatrix}$ and the eigenvalue $\lambda = 3$, find the normalized eigenvector.
+
+### Exercise Answer
+\[ \frac{1}{\sqrt{2}} \begin{pmatrix} 1 \\ 1 \end{pmatrix} \]
+
+---
+
+## Problem 3: Diagonalization ($A = V \Lambda V^\dagger$)
+
+### Example
+Using matrix $A = \begin{pmatrix} 0 & 1 \\ 1 & 0 \end{pmatrix}$, its eigenvalues $\lambda = \{1, -1\}$ and their normalized eigenvectors $v_1 = \frac{1}{\sqrt{2}}\begin{pmatrix} 1 \\ 1 \end{pmatrix}, v_2 = \frac{1}{\sqrt{2}}\begin{pmatrix} 1 \\ -1 \end{pmatrix}$, construct the diagonalization components.
+
+### Step 1: Construct the Matrices $\Lambda$ and $V$
+
+**Answer:** 
+$\Lambda = \begin{pmatrix} 1 & 0 \\ 0 & -1 \end{pmatrix}, \quad V = \frac{1}{\sqrt{2}} \begin{pmatrix} 1 & 1 \\ 1 & -1 \end{pmatrix}$
+
+### Final Decomposition
+
+**Answer:** 
+\[ A = \frac{1}{2} \begin{pmatrix} 1 & 1 \\ 1 & -1 \end{pmatrix} \begin{pmatrix} 1 & 0 \\ 0 & -1 \end{pmatrix} \begin{pmatrix} 1 & 1 \\ 1 & -1 \end{pmatrix} \]
+
+### Exercise
+If a matrix $M$ has eigenvalues $\lambda_1 = 5, \lambda_2 = 2$ and normalized eigenvectors $|v_1\rangle, |v_2\rangle$, write $M$ in its spectral decomposition form (using outer products).
+
+### Exercise Answer
+\[ M = 5 |v_1\rangle\langle v_1| + 2 |v_2\rangle\langle v_2| \]
+</script>
+
+<script type="text/markdown" id="md-5">
+# Single Qubit Systems: Measurement & Bloch Sphere
+
+---
+
+## Reference: The Standard Formula
+
+Any normalized single-qubit state can be written as:
+\[ |\psi\rangle = \cos\left(\frac{\theta}{2}\right)|0\rangle + e^{i\phi}\sin\left(\frac{\theta}{2}\right)|1\rangle \]
+
+- **$\theta$ (Theta)**: The angle from the Z-axis ($0 \le \theta \le \pi$).
+- **$\phi$ (Phi)**: The angle from the X-axis in the XY-plane ($0 \le \phi \le 2\pi$).
+- **Euler's Formula**: $e^{i\phi} = \cos\phi + i\sin\phi$.
+- **Polar Form**: $a + bi = r e^{i\gamma}$, where $r = \sqrt{a^2 + b^2}$ and $\gamma = \arctan(\frac{b}{a})$.
+
+---
+
+## 1. Measurement Probabilities (Z-basis)
+
+### Example
+Given the unnormalized state $|\psi\rangle = |0\rangle + i\sqrt{3}|1\rangle$, find the probability $P(0)$ and $P(1)$ of measuring in the Z-basis ($|0\rangle, |1\rangle$).
+
+### Step 1: Calculate the normalization factor
+Compute $N = \sqrt{\langle\psi|\psi\rangle}$.
+**Answer:** $\sqrt{|1|^2 + |i\sqrt{3}|^2} = \sqrt{1 + 3} = 2$
+
+### Step 2: Normalize the state
+Divide the coefficients by the normalization factor.
+**Answer:** $|\psi_{norm}\rangle = \frac{1}{2}|0\rangle + \frac{i\sqrt{3}}{2}|1\rangle$
+
+### Step 3: Compute probabilities
+Apply $P(i) = |c_i|^2$ for each basis state.
+**Answer:** $P(0) = |1/2|^2 = 1/4 = 0.25$; $P(1) = |i\sqrt{3}/2|^2 = 3/4 = 0.75$
+
+**Final Answer:**
+\[ P(0) = 0.25, \quad P(1) = 0.75 \]
+
+### Exercise
+Given the unnormalized state $|\phi\rangle = (1+i)|0\rangle + \sqrt{2}|1\rangle$, find $P(0)$.
+
+### Exercise Answer
+\[ P(0) = 0.5 \]
+
+---
+
+## 2. Measurement in Other Bases (X-basis)
+
+### Example
+For the normalized state $|\psi\rangle = \frac{1}{2}|0\rangle + \frac{i\sqrt{3}}{2}|1\rangle$, what is the probability of measuring the result $|+\rangle$? (Note: $|+\rangle = \frac{1}{\sqrt{2}}(|0\rangle + |1\rangle)$).
+
+### Step 1: Set up the inner product $\langle +|\psi\rangle$
+Multiply the bra $\langle +| = \frac{1}{\sqrt{2}}(\langle 0| + \langle 1|)$ by the ket $|\psi\rangle$.
+**Answer:** $\frac{1}{\sqrt{2}}(1 \cdot \frac{1}{2} + 1 \cdot \frac{i\sqrt{3}}{2}) = \frac{1 + i\sqrt{3}}{2\sqrt{2}}$
+
+### Step 2: Compute the probability $P(+) = |\langle +|\psi\rangle|^2$
+Take the magnitude squared of the complex result.
+**Answer:** $\frac{|1 + i\sqrt{3}|^2}{(2\sqrt{2})^2} = \frac{1^2 + (\sqrt{3})^2}{8} = \frac{4}{8} = 0.5$
+
+**Final Answer:**
+\[ P(+) = 0.5 \]
+
+### Exercise
+For the state $|\psi\rangle = |1\rangle$, find the probability of measuring $|+\rangle$.
+
+### Exercise Answer
+\[ P(+) = 0.5 \]
+
+---
+
+## Problem 3: Converting State to Bloch Coordinates
+
+### Example
+Represent the state $|\psi\rangle = \frac{1+i}{2}|0\rangle + \frac{\sqrt{2}}{2}|1\rangle$ on the Bloch Sphere.
+
+### Step 1: Normalize the state (if not already)
+Calculate $N = \sqrt{|\alpha|^2 + |\beta|^2}$ and ensure it equals 1.
+**Answer:** $|\frac{1+i}{2}|^2 + |\frac{\sqrt{2}}{2}|^2 = \frac{2}{4} + \frac{2}{4} = 1$. (Already normalized).
+
+### Step 2: Convert the $|0\rangle$ coefficient to Polar Form
+Find $r$ and $\gamma$ for $c_0 = \frac{1}{2} + \frac{1}{2}i$.
+**Answer:** $r = \sqrt{(1/2)^2 + (1/2)^2} = \frac{\sqrt{2}}{2}$. 
+$\gamma = \arctan( \frac{1/2}{1/2} ) = \arctan(1) = \pi/4$.
+So, $c_0 = \frac{\sqrt{2}}{2} e^{i\pi/4}$.
+
+### Step 3: Factor out the Global Phase
+Divide the entire state by $e^{i\gamma}$ so the $|0\rangle$ term becomes a real number.
+**Answer:** 
+$|\psi\rangle = e^{i\pi/4} \left[ \frac{\sqrt{2}}{2}|0\rangle + \left( \frac{\sqrt{2}/2}{e^{i\pi/4}} \right)|1\rangle \right]$
+$|\psi\rangle = e^{i\pi/4} \left[ \frac{\sqrt{2}}{2}|0\rangle + \frac{\sqrt{2}}{2}e^{-i\pi/4}|1\rangle \right]$
+
+### Step 4: Solve for $\theta$
+Match the first term to $\cos(\theta/2)$.
+**Answer:** $\cos(\theta/2) = \frac{\sqrt{2}}{2} \Rightarrow \frac{\theta}{2} = \frac{\pi}{4} \Rightarrow \theta = \frac{\pi}{2}$.
+
+### Step 5: Solve for $\phi$
+Match the phase of the second term to $e^{i\phi}$.
+**Answer:** The second term is $\sin(\theta/2)e^{i\phi}$. 
+Since $\sin(\pi/4) = \frac{\sqrt{2}}{2}$, then $e^{i\phi} = e^{-i\pi/4}$.
+$\phi = -\pi/4$ (or $7\pi/4$).
+
+**Final Answer:**
+\[ \theta = \pi/2, \quad \phi = -\pi/4 \]
+
+---
+
+## Problem 4: Global Phase Logic
+
+### Example
+Does the state $|\psi_1\rangle = |+\rangle$ and $|\psi_2\rangle = i|+\rangle$ represent the same point on the Bloch Sphere?
+
+### Step 1: Identify the relationship between states
+**Answer:** $|\psi_2\rangle = e^{i\pi/2}|\psi_1\rangle$. They differ only by a global phase $e^{i\pi/2}$.
+
+### Step 2: Conclusion based on Bloch physics
+**Answer:** Yes. Global phases are physically unobservable and do not change the $(\theta, \phi)$ coordinates on the sphere.
+
+**Final Answer:**
+Yes, they represent the same point.
+
+### Exercise
+Find the Bloch coordinates $(\theta, \phi)$ for the state $|1\rangle$.
+
+### Exercise Answer:
+$\theta = \pi, \phi = 0$ (The South Pole).
+</script>
+
+<script type="text/markdown" id="md-6">
+# Multi-Qubit Systems & Entanglement
+
+---
+
+## Entanglement Reference
+### Entanglement Criterion
+For a general 2-qubit state $|\psi\rangle = c_{00}|00\rangle + c_{01}|01\rangle + c_{10}|10\rangle + c_{11}|11\rangle$:
+- **Separable (Product State)**: $c_{00}c_{11} - c_{01}c_{10} = 0$
+- **Maximally Entangled**: $|c_{00}c_{11} - c_{01}c_{10}| = \frac{1}{2}$
+
+### Bell States & Circuit
+All sequences start from the initial state $|00\rangle$. ($q_0$ is the first qubit, $q_1$ is the second).
+
+**State 1: $|\beta_{00}\rangle = \frac{1}{\sqrt{2}}(|00\rangle + |11\rangle)$**
+- Step: $|00\rangle \xrightarrow{H_0} \frac{1}{\sqrt{2}}(|00\rangle + |10\rangle) \xrightarrow{CNOT} \frac{1}{\sqrt{2}}(|00\rangle + |11\rangle)$
+
+**State 2: $|\beta_{01}\rangle = \frac{1}{\sqrt{2}}(|01\rangle + |10\rangle)$**
+- Step: $|00\rangle \xrightarrow{X_1} |01\rangle \xrightarrow{H_0} \frac{1}{\sqrt{2}}(|01\rangle + |11\rangle) \xrightarrow{CNOT} \frac{1}{\sqrt{2}}(|01\rangle + |10\rangle)$
+
+**State 3: $|\beta_{10}\rangle = \frac{1}{\sqrt{2}}(|00\rangle - |11\rangle)$**
+- Step: $|00\rangle \xrightarrow{X_0} |10\rangle \xrightarrow{H_0} \frac{1}{\sqrt{2}}(|00\rangle - |10\rangle) \xrightarrow{CNOT} \frac{1}{\sqrt{2}}(|00\rangle - |11\rangle)$
+
+**State 4: $|\beta_{11}\rangle = \frac{1}{\sqrt{2}}(|01\rangle - |10\rangle)$**
+- Step: $|00\rangle \xrightarrow{X_0, X_1} |11\rangle \xrightarrow{H_0} \frac{1}{\sqrt{2}}(|01\rangle - |11\rangle) \xrightarrow{CNOT} \frac{1}{\sqrt{2}}(|01\rangle - |10\rangle)$
+
+---
+
+## Problem 1: Partial Measurement (Z-basis)
+
+### Example
+Given the state $|\psi\rangle = \frac{1}{\sqrt{3}}|00\rangle + \sqrt{\frac{2}{3}}|11\rangle$, find the probability of measuring the **second qubit** as $|1\rangle$, and find the resulting state of the **first qubit** after measurement.
+
+### Step 1: Identify terms where the second qubit is $|1\rangle$
+
+**Answer:** 
+The only term is $\sqrt{\frac{2}{3}}|11\rangle$.
+
+### Step 2: Calculate the probability $P(q_1 = 1)$
+
+**Answer:** 
+$|\sqrt{\frac{2}{3}}|^2 = \frac{2}{3}$
+
+### Step 3: Determine the state of the first qubit
+
+**Answer:** 
+The system collapses to $|11\rangle$. The first qubit is in state $|1\rangle$.
+
+### Exercise   
+Given the state $|\psi\rangle = \frac{1}{2}|00\rangle + \frac{1}{2}|01\rangle + \frac{1}{\sqrt{2}}|10\rangle$, find the probability of measuring the **second qubit** as $|0\rangle$.
+
+### Exercise Answer
+Probability = $3/4$ (or 0.75).
+
+---
+
+## Problem 2: Conditional Measurement & Renormalization
+
+### Example
+Consider the 2-qubit system state:
+$$ 
+|\Psi\rangle = \frac{1}{2}(|00\rangle - |01\rangle + |10\rangle - |11\rangle) 
+$$
+If we measure the **second qubit** ($q_1$) and find it to be $|1\rangle$, what is the probability that a subsequent measurement on the **first qubit** ($q_0$) will yield $|0\rangle$?
+
+### Step 1: Identify terms where the second qubit is $|1\rangle$
+Look at the amplitudes for $|01\rangle$ and $|11\rangle$.
+**Answer:** The terms are $-\frac{1}{2}|01\rangle$ and $-\frac{1}{2}|11\rangle$.
+
+### Step 2: Calculate the probability of the first outcome $P(q_1=1)$
+Sum the squared magnitudes of the coefficients from Step 1.
+**Answer:** $|-\frac{1}{2}|^2 + |-\frac{1}{2}|^2 = \frac{1}{4} + \frac{1}{4} = \frac{1}{2}$.
+
+### Step 3: Write the collapsed state and Re-normalize
+Keep only the $|01\rangle$ and $|11\rangle$ terms, then divide by the square root of the probability from Step 2 ($\sqrt{\frac{1}{2}}$).
+**Answer:** 
+Unnormalized: $-\frac{1}{2}|01\rangle - \frac{1}{2}|11\rangle$
+Normalized: $\frac{1}{\sqrt{2}}(-|01\rangle - |11\rangle)$
+*(Note: The global phase $-1$ can be ignored, leaving $\frac{1}{\sqrt{2}}(|01\rangle + |11\rangle)$)*
+
+### Step 4: Calculate the conditional probability for the first qubit
+In the new state $\frac{1}{\sqrt{2}}(|0\rangle + |1\rangle) \otimes |1\rangle$, find the probability that $q_0 = 0$.
+**Answer:** The amplitude of $|0\rangle$ is $\frac{1}{\sqrt{2}}$. The probability is $|\frac{1}{\sqrt{2}}|^2 = \frac{1}{2}$.
+
+**Final Answer:**
+The conditional probability $P(q_0=0 | q_1=1) = 0.5$.
+
+### Exercise
+Given the state $|\Psi\rangle = \frac{1}{\sqrt{3}}|00\rangle + \frac{1}{\sqrt{3}}|01\rangle + \frac{1}{\sqrt{3}}|11\rangle$. If the first qubit is measured as $|0\rangle$, what is the probability that the second qubit is also $|0\rangle$?
+
+### Exercise Answer
+Probability = $0.5$ (After measuring $q_0=0$, the state collapses and re-normalizes to $\frac{1}{\sqrt{2}}(|00\rangle + |01\rangle)$).
+</script>
+
+<script type="text/markdown" id="md-7">
+# Quantum Operators & Gate Behaviors
+
+---
+
+## 1. Single-Qubit Gate Actions
+
+These gates act on a single qubit. The following shows how they transform the basis states:
+
+- **Pauli-X (NOT Gate)**
+  - $|0\rangle \xrightarrow{X} |1\rangle \quad|\quad |1\rangle \xrightarrow{X} |0\rangle$
+
+- **Pauli-Z (Phase Flip)**
+  - $|0\rangle \xrightarrow{Z} |0\rangle \quad|\quad |1\rangle \xrightarrow{Z} -|1\rangle$
+
+- **Hadamard (H)**
+  - $|0\rangle \xrightarrow{H} \frac{1}{\sqrt{2}}(|0\rangle + |1\rangle)$
+  - $|1\rangle \xrightarrow{H} \frac{1}{\sqrt{2}}(|0\rangle - |1\rangle)$
+
+---
+
+## 2. Multi-Qubit Gate Actions
+
+These gates involve a **Control** qubit ($q_0$) and a **Target** qubit ($q_1$). 
+
+- **CX (CNOT / Controlled-NOT)**
+  - *Behavior*: Flips the target qubit if and only if the control qubit is $|1\rangle$.
+  - $|00\rangle \xrightarrow{CX_{0,1}} |00\rangle$
+  - $|10\rangle \xrightarrow{CX_{0,1}} |11\rangle$
+
+- **CH (Controlled-Hadamard)**
+  - *Behavior*: Applies the Hadamard gate to the target qubit if and only if the control qubit is $|1\rangle$.
+  - $|10\rangle \xrightarrow{CH_{0,1}} \frac{1}{\sqrt{2}}(|10\rangle + |11\rangle)$
+
+- **SWAP**
+  - *Behavior*: Exchanges the quantum states of the two qubits.
+  - $|10\rangle \xrightarrow{SWAP} |01\rangle$
+
+---
+
+## 3. Special Operator: Measurement
+
+Measurement is a unique operator in quantum mechanics with the following characteristics:
+
+- **Non-Unitary & Irreversible**: Unlike gates ($X, H, CX$, etc.), measurement **cannot be undone**. Once a measurement is performed, the original superposition is lost.
+- **State Collapse**: When a qubit in a state like $\alpha|0\rangle + \beta|1\rangle$ is measured, it immediately collapses into either $|0\rangle$ (with probability $|\alpha|^2$) or $|1\rangle$ (with probability $|\beta|^2$).
+- **Classical Output**: It extracts a classical bit ($0$ or $1$) from the quantum system, effectively "destroying" the quantum coherence of the measured qubit.
+</script>
+
+<script type="text/markdown" id="md-8">
+# Grover’s Algorithm (N = 4 Case)
+
+---
+
+## 1. Grover Logic Reference
+
+- **Step 1: Initial Superposition**: Start with a uniform superposition of all $N$ states. For $N=4$, the amplitudes are all $1/\sqrt{4} = 0.5$.
+- **Step 2: Oracle (Phase Inversion)**: The Oracle flips the sign (multiplies by -1) of the **target state**'s amplitude.
+- **Step 3: Diffusion (Inversion about the Mean)**: 
+  1. Calculate the average (mean) amplitude: $\bar{a} = \frac{1}{N} \sum a_i$.
+  2. Apply the transformation to each amplitude: $a_i' = 2\bar{a} - a_i$.
+
+---
+
+## Problem 1: Grover Iteration for 2-Qubits
+
+### Example
+Suppose we are searching for the target state $|11\rangle$ in a 2-qubit system ($N=4$). Compute the amplitudes after one Grover iteration.
+
+### Step 1: Write the initial amplitudes ($\psi_1$)
+**Answer:** 
+$a_{00}=0.5, \quad a_{01}=0.5, \quad a_{10}=0.5, \quad a_{11}=0.5$
+
+### Step 2: Apply the Oracle marking $|11\rangle$ ($\psi_2$)
+**Answer:** 
+$a_{00}=0.5, \quad a_{01}=0.5, \quad a_{10}=0.5, \quad a_{11}=-0.5$
+
+### Step 3: Calculate the average amplitude ($\bar{a}$)
+**Answer:** 
+$\bar{a} = \frac{0.5 + 0.5 + 0.5 + (-0.5)}{4} = 0.25$
+
+### Step 4: Apply inversion about the mean ($a_i' = 2\bar{a} - a_i$)
+**Answer:** 
+- For non-target: $a' = 2(0.25) - 0.5 = 0$
+- For target ($|11\rangle$): $a_{11}' = 2(0.25) - (-0.5) = 1$
+Final state is $|11\rangle$.
+
+### Exercise
+Suppose the target state is $|01\rangle$. Starting from the uniform superposition $[0.5, 0.5, 0.5, 0.5]$, calculate the amplitudes after the Oracle marks $|01\rangle$ and the Diffusion operator is applied.
+
+### Exercise Answer
+1. After Oracle: $a_{00}=0.5, a_{01}=-0.5, a_{10}=0.5, a_{11}=0.5$
+2. Mean: $\bar{a} = 0.25$
+3. After Diffusion: $a_{00}=0, a_{01}=1, a_{10}=0, a_{11}=0$
+</script>
+
+    <!-- ========================================== -->
+    <!-- 核心 JS 逻辑 -->
+    <!-- ========================================== -->
+    <script>
+        // 定义菜单和对应的 Markdown 脚本 ID
+        const modules = [
+            { id: 'md-0', title: 'Home & Rules' },
+            { id: 'md-1', title: '1. Complex Numbers' },
+            { id: 'md-2', title: '2. Dirac Notation' },
+            { id: 'md-3', title: '3. Linear Algebra I' },
+            { id: 'md-4', title: '4. Linear Algebra II' },
+            { id: 'md-5', title: '5. Single Qubit' },
+            { id: 'md-6', title: '6. Multi-Qubit' },
+            { id: 'md-7', title: '7. Operators' },
+            { id: 'md-8', title: '8. Grover\'s Algo' }
+        ];
+
+        const menuContainer = document.getElementById('menu');
+        const contentArea = document.getElementById('content-area');
+        let currentButton = null;
+
+        modules.forEach((mod, index) => {
+            const btn = document.createElement('button');
+            // 设置侧边栏按钮的默认样式 (未选中态)
+            btn.className = "w-full text-left px-5 py-4 rounded-lg font-bold text-lg transition-colors duration-200 text-[#a3d1c6] hover:bg-[#005a46] hover:text-white";
+            btn.innerText = mod.title;
+            btn.onclick = () => loadModule(mod.id, btn);
+            menuContainer.appendChild(btn);
+
+            if (index === 0) loadModule(mod.id, btn);
+        });
+
+        function loadModule(scriptId, btn) {
+            // 1. 更新导航栏高亮状态
+            if (currentButton) {
+                currentButton.classList.remove('bg-white', 'text-[#006b54]', 'shadow-md');
+                currentButton.classList.add('text-[#a3d1c6]');
+            }
+            btn.classList.remove('text-[#a3d1c6]');
+            btn.classList.add('bg-white', 'text-[#006b54]', 'shadow-md');
+            currentButton = btn;
+
+            // 获取原始 Markdown 文本
+            let rawMarkdown = document.getElementById(scriptId).textContent;
+
+            // ==========================================
+            // Fix 1: 修复矩阵 (Matrix) 渲染问题
+            // 提前将 LaTeX 矩阵中的 \\ 替换为 \\\\，防止被 marked.js 吞噬
+            // ==========================================
+            rawMarkdown = rawMarkdown.replace(/\\\\/g, '\\\\\\\\');
+
+            // ==========================================
+            // Fix 2: 修复 ### 标题变普通文本的问题
+            // 确保在 </details> 后面有 \n\n，让 Markdown 重新识别标题
+            // ==========================================
+            
+            // 匹配 **Answer:** 及其后续内容
+            rawMarkdown = rawMarkdown.replace(/\*\*Answer:\*\*([\s\S]*?)(?=(###|---|\*\*Final Answer|\*\*Exercise|$))/g, 
+                '<details class="reveal"><summary>Click to show Step Answer</summary><div class="details-content">\n\n$1\n\n</div></details>\n\n');
+            
+            // 匹配 **Final Answer:** 
+            rawMarkdown = rawMarkdown.replace(/\*\*Final Answer:\*\*([\s\S]*?)(?=(###|---|$))/g, 
+                '<details class="reveal final"><summary>Click to show Final Answer</summary><div class="details-content">\n\n$1\n\n</div></details>\n\n');
+            
+            // 匹配 ### Exercise Answer
+            rawMarkdown = rawMarkdown.replace(/### Exercise Answer\s*([\s\S]*?)(?=(---|<br>|###|$))/g, 
+                '<details class="reveal exercise"><summary>Click to show Exercise Answer</summary><div class="details-content">\n\n$1\n\n</div></details>\n\n');
+
+            // 渲染 HTML
+            contentArea.innerHTML = marked.parse(rawMarkdown);
+
+            // 重新调用 MathJax 渲染公式
+            if (window.MathJax && window.MathJax.typesetPromise) {
+                MathJax.typesetPromise([contentArea]).catch(function (err) {
+                    console.error('MathJax error:', err.message);
+                });
+            }
+
+            // 自动回到顶部
+            document.getElementById('main-content').scrollTop = 0;
+        }
+    </script>
+</body>
+</html>
