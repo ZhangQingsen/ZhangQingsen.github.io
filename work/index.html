@@ -1,0 +1,223 @@
+﻿<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Selected research and engineering work by Qingsen Zhang.">
+  <title>Work | Qingsen Zhang</title>
+  <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+  <main class="container">
+    <header class="site-header">
+      <a class="name" href="../">Qingsen Zhang</a>
+
+      <nav aria-label="Main navigation">
+        <a href="../">About</a>
+        <a href="./" aria-current="page">Work</a>
+        <a href="../blog/">Blog</a>
+        <a href="../cv/">CV</a>
+      </nav>
+    </header>
+
+    <section class="page-hero">
+      <p class="eyebrow">Research and Engineering</p>
+      <h1>Selected Work</h1>
+      <p>
+        My work spans 3D computer vision, generative modeling, research-data
+        development, and industrial machine vision. I am particularly
+        interested in systems that must operate with constrained observations,
+        specialized hardware, or real production requirements.
+      </p>
+    </section>
+
+    <section class="work-detail" id="face-reconstruction">
+      <div class="work-detail-header">
+        <div class="work-number">01 · Doctoral Research</div>
+
+        <div>
+          <h2>Wearable 3D Face Reconstruction</h2>
+          <p class="work-subtitle">
+            Binghamton University · 2024–Present · Advisor: Prof. Yincheng Jin
+          </p>
+
+          <p class="work-summary">
+            This project investigates how complete, template-aligned 3D facial
+            geometry can be recovered from two miniature cameras mounted on the
+            rims of ordinary eyewear. These cameras observe only fragmented and
+            highly distorted facial regions, creating a reconstruction problem
+            dominated by near-field perspective, self-occlusion, and missing
+            information.
+          </p>
+
+          <div class="detail-grid">
+            <article class="detail-card">
+              <h3>Data Collection</h3>
+              <p>
+                Designed and operated a dual-rim wearable capture system and
+                collected more than 700,000 synchronized frame pairs from
+                17 Deaf ASL signers.
+              </p>
+            </article>
+
+            <article class="detail-card">
+              <h3>Pipeline Design</h3>
+              <p>
+                Developed a rim-to-canonical reconstruction pipeline using
+                multi-scale view conditioning and rectified flow in
+                template-aligned UV displacement space.
+              </p>
+            </article>
+
+            <article class="detail-card">
+              <h3>Evaluation</h3>
+              <p>
+                Implemented and trained the models in PyTorch, adapted
+                comparison methods, and evaluated surface and facial-landmark
+                reconstruction on participant-disjoint splits.
+              </p>
+            </article>
+          </div>
+
+          <ul class="tag-list" aria-label="Technologies">
+            <li>3D Computer Vision</li>
+            <li>PyTorch</li>
+            <li>PyTorch3D</li>
+            <li>Rectified Flow</li>
+            <li>3D Meshes</li>
+            <li>Wearable Sensing</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="work-detail" id="industrial-vision">
+      <div class="work-detail-header">
+        <div class="work-number">02 · Industrial Engineering</div>
+
+        <div>
+          <h2>Machine Vision for Manufacturing</h2>
+          <p class="work-subtitle">
+            Wuxi Lead Intelligent Equipment Co., Ltd. · 2021
+          </p>
+
+          <p class="work-summary">
+            As a machine vision engineer, I developed vision software for
+            engineer-to-order lithium-ion battery manufacturing equipment.
+            Each machine configuration reflected different production
+            processes, customer specifications, and mechanical layouts, so the
+            vision system had to be adapted and validated in context rather
+            than treated as a standalone algorithm.
+          </p>
+
+          <div class="detail-grid">
+            <article class="detail-card">
+              <h3>Development</h3>
+              <p>
+                Developed C++ software with OpenCV for dimensional measurement,
+                surface-defect inspection, electrode-tab positioning, and
+                geometric calibration.
+              </p>
+            </article>
+
+            <article class="detail-card">
+              <h3>System Adaptation</h3>
+              <p>
+                Adapted inspection and measurement functions across machine
+                configurations and customer requirements, while maintaining
+                HALCON-based systems where applicable.
+              </p>
+            </article>
+
+            <article class="detail-card">
+              <h3>Commissioning</h3>
+              <p>
+                Spent approximately three months at customer manufacturing
+                sites commissioning equipment, tuning vision systems, and
+                modifying software as production issues emerged.
+              </p>
+            </article>
+          </div>
+
+          <ul class="tag-list" aria-label="Technologies">
+            <li>C++</li>
+            <li>OpenCV</li>
+            <li>HALCON</li>
+            <li>Machine Vision</li>
+            <li>Calibration</li>
+            <li>Industrial Automation</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="work-detail" id="asl-dataset">
+      <div class="work-detail-header">
+        <div class="work-number">03 · Research Data</div>
+
+        <div>
+          <h2>Egocentric Stereo ASL Hand Dataset</h2>
+          <p class="work-subtitle">
+            Binghamton University · Continuous sign-language data
+          </p>
+
+          <p class="work-summary">
+            This collaborative project develops egocentric stereo data for
+            studying continuous American Sign Language, 3D signing-hand
+            reconstruction, and manual-channel language understanding. Unlike
+            the dual-rim facial capture system, this project uses a head-mounted
+            stereo camera to observe hand motion during signing.
+          </p>
+
+          <div class="detail-grid">
+            <article class="detail-card">
+              <h3>Collection</h3>
+              <p>
+                Contributed to collecting and organizing recordings from
+                25 Deaf native ASL signers under an approved research protocol.
+              </p>
+            </article>
+
+            <article class="detail-card">
+              <h3>Annotation</h3>
+              <p>
+                Took a primary role in processing and reviewing linguistic and
+                3D hand-pose annotations for continuous signing sequences.
+              </p>
+            </article>
+
+            <article class="detail-card">
+              <h3>Quality Assurance</h3>
+              <p>
+                Helped establish data-review and quality-control workflows for
+                large-scale egocentric stereo video and associated annotations.
+              </p>
+            </article>
+          </div>
+
+          <ul class="tag-list" aria-label="Topics">
+            <li>Egocentric Vision</li>
+            <li>Stereo Video</li>
+            <li>3D Hand Pose</li>
+            <li>ASL</li>
+            <li>Data Curation</li>
+            <li>Quality Assurance</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      <p>© 2026 Qingsen Zhang</p>
+
+      <p>
+        <a href="../cv/">CV</a>
+        ·
+        <a href="mailto:qzhang11@binghamton.edu">Email</a>
+        ·
+        <a href="https://github.com/ZhangQingsen">GitHub</a>
+      </p>
+    </footer>
+  </main>
+</body>
+</html>

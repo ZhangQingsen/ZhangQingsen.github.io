@@ -3,51 +3,175 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Personal website of Qingsen Zhang.">
+  <meta name="description" content="Qingsen Zhang is a Computer Science Ph.D. candidate working on 3D computer vision, generative modeling, and wearable sensing.">
   <title>Qingsen Zhang</title>
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
   <main class="container">
     <header class="site-header">
-      <a class="name" href="/">Qingsen Zhang</a>
+      <a class="name" href="./">Qingsen Zhang</a>
+
       <nav aria-label="Main navigation">
+        <a href="./" aria-current="page">About</a>
+        <a href="work/">Work</a>
         <a href="blog/">Blog</a>
+        <a href="cv/">CV</a>
       </nav>
     </header>
 
-    <section class="intro">
-      <img class="avatar" src="assets/images/avatar.png" alt="Portrait of Qingsen Zhang">
-
+    <section class="hero">
       <div>
+        <p class="eyebrow">Computer Vision · Machine Learning</p>
+
         <h1>Qingsen Zhang</h1>
-        <p class="lead">
-          Computer Science researcher and engineer.
+
+        <p class="hero-title">
+          Ph.D. Candidate in Computer Science at Binghamton University
         </p>
-        <p>
-          I am interested in machine learning, computer vision,
-          medical imaging, and quantum computing.
+
+        <p class="hero-description">
+          I work on 3D computer vision, generative modeling, and wearable
+          sensing. My current research focuses on recovering structured 3D
+          geometry from severely constrained egocentric observations.
         </p>
-        <p class="links">
-          <a href="https://github.com/ZhangQingsen">GitHub</a>
-          <span>·</span>
-          <a href="https://scholar.google.com/citations?user=56R5dLkAAAAJ&hl=en">Google Scholar</a>
-          <span>·</span>
-          <a href="mailto:zqseffort@outlook.com">Email</a>
+
+        <p class="hero-description">
+          Before beginning my Ph.D., I worked on machine-vision software and
+          production-site deployment for industrial automation systems. I am
+          particularly interested in connecting learning-based vision research
+          with reliable systems that operate under real-world constraints.
         </p>
+
+        <div class="actions">
+          <a class="button" href="work/">View selected work</a>
+          <a class="button secondary" href="cv/">View CV</a>
+          <a class="button secondary" href="https://github.com/ZhangQingsen">GitHub</a>
+        </div>
+      </div>
+
+      <div class="avatar-wrap">
+        <img
+          class="avatar"
+          src="assets/images/avatar.png"
+          alt="Portrait of Qingsen Zhang">
       </div>
     </section>
 
-    <section>
-      <h2>About</h2>
-      <p>
-        This site collects selected work, teaching materials, and personal technical notes.
-        It is currently being rebuilt.
-      </p>
+    <section class="home-section">
+      <div class="section-heading">
+        <h2>Currently</h2>
+
+        <div class="section-content">
+          <div class="currently">
+            <p>
+              I am pursuing a Ph.D. in Computer Science at Binghamton
+              University under the supervision of Prof. Yincheng Jin.
+              My research explores wearable and egocentric vision, with an
+              emphasis on generative reconstruction of structured 3D geometry.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="home-section">
+      <div class="section-heading">
+        <h2>Selected Work</h2>
+
+        <div class="section-content">
+          <div class="work-grid">
+            <article class="work-card">
+              <p class="meta">Doctoral Research</p>
+              <h3>Wearable 3D Face Reconstruction</h3>
+              <p>
+                Reconstructing complete, template-aligned 3D facial geometry
+                from fragmented dual-rim camera views under severe near-field
+                distortion and self-occlusion.
+              </p>
+              <a class="card-link" href="work/#face-reconstruction">
+                Learn more →
+              </a>
+            </article>
+
+            <article class="work-card">
+              <p class="meta">Industrial Vision</p>
+              <h3>Machine Vision for Manufacturing</h3>
+              <p>
+                Developing and commissioning C++ and OpenCV vision software
+                for engineer-to-order industrial equipment, including
+                measurement, inspection, calibration, and on-site debugging.
+              </p>
+              <a class="card-link" href="work/#industrial-vision">
+                Learn more →
+              </a>
+            </article>
+
+            <article class="work-card">
+              <p class="meta">Research Data</p>
+              <h3>Egocentric Stereo ASL Dataset</h3>
+              <p>
+                Collecting and curating continuous sign-language recordings,
+                with a focus on annotation processing, review, and quality
+                assurance for linguistic and 3D hand-pose data.
+              </p>
+              <a class="card-link" href="work/#asl-dataset">
+                Learn more →
+              </a>
+            </article>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="home-section">
+      <div class="section-heading">
+        <h2>Publications</h2>
+
+        <div class="section-content">
+          <ul class="publication-list">
+            <li>
+              <p>
+                <strong>Toward Scalable ASL Education: Egocentric Stereo
+                Sensing with LLM Feedback for Error-Aware Learning</strong>
+              </p>
+              <p class="venue">
+                Proceedings of the CHI Conference on Human Factors in
+                Computing Systems, 2026
+              </p>
+            </li>
+
+            <li>
+              <p>
+                <strong>Attendance System Based on Blockchain and Face Recognition</strong>
+              </p>
+              <p class="venue">
+                IEEE SmartNets, 2022
+              </p>
+            </li>
+          </ul>
+
+          <p style="margin-top: 22px;">
+            <a href="https://scholar.google.com/citations?user=56R5dLkAAAAJ&hl=en">
+              View Google Scholar →
+            </a>
+          </p>
+        </div>
+      </div>
     </section>
 
     <footer>
       <p>© 2026 Qingsen Zhang</p>
+
+      <p>
+        <a href="mailto:qzhang11@binghamton.edu">Email</a>
+        ·
+        <a href="https://github.com/ZhangQingsen">GitHub</a>
+        ·
+        <a href="https://scholar.google.com/citations?user=56R5dLkAAAAJ&hl=en">
+          Google Scholar
+        </a>
+      </p>
     </footer>
   </main>
 </body>
