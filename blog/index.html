@@ -1,4 +1,4 @@
-﻿<!doctype html>
+<!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
@@ -25,9 +25,9 @@
         Technical writing, teaching materials, and archived coursework.
       </p>
 
-      <ul id="post-list" class="blog-list">
-        <li>Loading...</li>
-      </ul>
+      <div id="post-groups">
+        <p>Loading...</p>
+      </div>
     </section>
 
     <footer>
@@ -36,6 +36,18 @@
   </main>
 
   <script>
+    const GROUPS = [
+      { key: "independent", title: "Independent Projects" },
+      { key: "coursework", title: "Coursework & Experiments" },
+      { key: "teaching", title: "Teaching Materials" }
+    ];
+
+    const BADGE_LABELS = {
+      independent: "Independent",
+      coursework: "Coursework",
+      teaching: "Teaching"
+    };
+
     fetch("posts.json")
       .then(response => {
         if (!response.ok) {
@@ -46,24 +58,55 @@
       .then(posts => {
         posts.sort((a, b) => new Date(b.date) - new Date(a.date));
 
-        const list = document.getElementById("post-list");
-        list.innerHTML = "";
+        const container = document.getElementById("post-groups");
+        container.innerHTML = "";
 
-        for (const post of posts) {
-          const item = document.createElement("li");
+        for (const group of GROUPS) {
+          const groupPosts = posts.filter(p => (p.category || "teaching") === group.key);
+          if (groupPosts.length === 0) continue;
 
-          item.innerHTML = `
-            <h2><a href="${post.url}">${post.title}</a></h2>
-            <p class="meta">${post.meta}</p>
-            <p>${post.description}</p>
-          `;
+          const section = document.createElement("section");
+          section.className = "blog-group";
 
-          list.appendChild(item);
+          const heading = document.createElement("h2");
+          heading.className = "blog-group-title";
+          heading.textContent = group.title;
+          section.appendChild(heading);
+
+          for (const post of groupPosts) {
+            const card = document.createElement("article");
+            card.className = "post-card";
+
+            const badge = document.createElement("span");
+            badge.className = "badge badge-" + group.key;
+            badge.textContent = BADGE_LABELS[group.key];
+            card.appendChild(badge);
+
+            const title = document.createElement("h3");
+            const link = document.createElement("a");
+            link.href = post.url;
+            link.textContent = post.title;
+            title.appendChild(link);
+            card.appendChild(title);
+
+            const meta = document.createElement("p");
+            meta.className = "meta";
+            meta.textContent = post.meta;
+            card.appendChild(meta);
+
+            const desc = document.createElement("p");
+            desc.textContent = post.description;
+            card.appendChild(desc);
+
+            section.appendChild(card);
+          }
+
+          container.appendChild(section);
         }
       })
       .catch(error => {
-        document.getElementById("post-list").innerHTML =
-          "<li>Unable to load the blog index.</li>";
+        document.getElementById("post-groups").innerHTML =
+          "<p>Unable to load the blog index.</p>";
         console.error(error);
       });
   </script>
