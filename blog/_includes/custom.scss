@@ -15,10 +15,11 @@ $toc-active-color: #176b87;
 
 /*-- scss:rules --*/
 
-/* Page background: match the homepage (soft radial glow on light blue-grey) */
+/* Page background: match the homepage (soft teal glow, now clearly visible) */
 body {
   background:
-    radial-gradient(circle at 85% 4%, rgba(23, 107, 135, 0.10), transparent 25rem),
+    radial-gradient(circle at 85% 4%, rgba(23, 107, 135, 0.16), transparent 26rem),
+    linear-gradient(180deg, rgba(23, 107, 135, 0.05), transparent 40rem),
     #f8fafc;
 }
 
@@ -58,15 +59,24 @@ body {
   color: #176b87;
 }
 
-/* Title block */
+/* Title block: accent-colored title */
 .quarto-title-block .title {
+  color: #124f65;
   font-weight: 750;
   letter-spacing: -0.02em;
-  color: #172033;
 }
 
 .quarto-title-block .subtitle {
   color: #5f6b7a;
+}
+
+/* Section headings in accent colors */
+h2 {
+  color: #124f65;
+}
+
+h3 {
+  color: #176b87;
 }
 
 /* TOC */
@@ -77,25 +87,33 @@ body {
 #TOC .nav-link.active,
 #TOC .nav-link:hover {
   color: #176b87;
+  font-weight: 600;
 }
 
-/* Code blocks: rounded cards, same feel as the homepage cards */
+/* Code blocks: clearly visible cards with a teal accent bar */
 .cell {
   margin: 1.5rem 0;
 }
 
 div.sourceCode,
 .cell > .sourceCode {
-  border: 1px solid #dce3eb;
-  border-radius: 12px;
-  background: #f1f5f9;
-  box-shadow: 0 12px 34px rgba(30, 54, 74, 0.06);
+  border: 1px solid #cfe0e8;
+  border-left: 4px solid #176b87;
+  border-radius: 10px;
+  background: #eef5f8;
+  box-shadow: 0 8px 24px rgba(30, 54, 74, 0.08);
   overflow: hidden;
 }
 
 pre.sourceCode {
-  border-radius: 12px;
+  border-radius: 10px;
   padding: 0.9rem 1rem;
+}
+
+/* Code-fold summary button */
+details.code-fold summary {
+  color: #176b87;
+  font-weight: 600;
 }
 
 /* Figures */
@@ -106,9 +124,9 @@ pre.sourceCode {
 
 .figure img {
   max-width: 100%;
-  border: 1px solid #dce3eb;
+  border: 1px solid #c9dee7;
   border-radius: 12px;
-  box-shadow: 0 12px 34px rgba(30, 54, 74, 0.08);
+  box-shadow: 0 12px 34px rgba(30, 54, 74, 0.10);
 }
 
 .figure-caption {
@@ -117,17 +135,24 @@ pre.sourceCode {
   font-size: 0.85rem;
 }
 
-/* Tables */
+/* Tables: teal header */
 .table {
   border-radius: 10px;
   overflow: hidden;
+}
+
+.table thead th {
+  background: #176b87;
+  color: #ffffff;
+  font-weight: 600;
+  border: none;
 }
 
 /* Blockquotes */
 blockquote {
   border-left: 4px solid #176b87;
   border-radius: 4px;
-  background: rgba(23, 107, 135, 0.06);
+  background: rgba(23, 107, 135, 0.08);
 }
 
 /* Site footer, injected via include-after-body */
