@@ -72,6 +72,8 @@
     #link("https://scholar.google.com/citations?user=56R5dLkAAAAJ&hl=en")[
       Google Scholar
     ]
+    #h(0.35em) · #h(0.35em)
+    #link("https://www.linkedin.com/in/qingsen-zhang-2672351b9/")[LinkedIn]
   ]
 ]
 
@@ -173,7 +175,7 @@
   "Ph.D. Candidate in Computer Science",
   "Binghamton University",
   "Binghamton, NY",
-  "Aug. 2024 – May 2030 (expected)",
+  "Aug. 2024 – May 2028 (expected)",
 )
 
 #entry(
@@ -198,13 +200,6 @@
 )
 
 #section[PUBLICATIONS]
-
-#bullet[
-  Y. Cai, Z. Li, T. Lu, Y. Zhu, Y.-S. Wu, *Q. Zhang*, X. Xu, Z. Jin,
-  M. Gowda, and Y. Jin. “Toward Scalable ASL Education: Egocentric Stereo
-  Sensing with LLM Feedback for Error-Aware Learning.”
-  #emph[Proceedings of the CHI Conference on Human Factors in Computing Systems],2026.
-]
 
 #bullet[
   *Q. Zhang*. “Attendance System Based on Blockchain and Face Recognition.”

@@ -444,6 +444,13 @@ main > section:not(.hero):not(.home-section) > h1 {
   color: #8a7d5a;
 }
 
+/* Availability highlight (homepage hero) */
+.hero-availability {
+  color: var(--accent);
+  font-weight: 600;
+  margin-top: 0.7rem;
+}
+
 /* Footer */
 
 footer {

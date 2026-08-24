@@ -70,6 +70,8 @@
     #link("https://zhangqingsen.github.io/")[GitHub]
     #h(0.35em) · #h(0.35em)
     #link("https://scholar.google.com/citations?user=56R5dLkAAAAJ&hl=en")[Google Scholar]
+    #h(0.35em) · #h(0.35em)
+    #link("https://www.linkedin.com/in/qingsen-zhang-2672351b9/")[LinkedIn]
   ]
 ]
 
@@ -171,7 +173,7 @@
   "计算机科学博士候选人",
   "宾汉姆顿大学",
   "纽约州宾汉姆顿",
-  "预计2024年8月 – 2030年5月",
+  "预计2024年8月 – 2028年5月",
 )
 
 #entry(
@@ -196,10 +198,6 @@
 )
 
 #section[论文发表]
-
-#bullet[
-  Y. Cai, Z. Li, T. Lu, Y. Zhu, Y.-S. Wu, #emph[Q. Zhang], X. Xu, Z. Jin, M. Gowda, and Y. Jin. “Toward Scalable ASL Education: Egocentric Stereo Sensing with LLM Feedback for Error-Aware Learning.” #emph[Proceedings of the CHI Conference on Human Factors in Computing Systems], 2026.
-]
 
 #bullet[
   #emph[Q. Zhang]. “Attendance System Based on Blockchain and Face Recognition.” #emph[2022 International Conference on Smart Applications, Communications and Networking (SmartNets)], 2022.
