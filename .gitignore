@@ -1,0 +1,7 @@
+# 本地 AI 协作/交接文档（含求职等敏感信息，不推送到 GitHub）
+_meta/
+
+# Python / Quarto 临时产物
+.venv/
+__pycache__/
+*.pyc

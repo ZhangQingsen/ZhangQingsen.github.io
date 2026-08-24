@@ -28,10 +28,10 @@
     "url": "cs5805-fall-2023/"
   },
   {
-  "title": "HHL Algorithm Implementation in Qiskit",
-  "date": "2025-01-31",
-  "meta": "Independent technical exploration · January 2025",
-  "description": "A step-by-step implementation of the HHL algorithm using Qiskit, from state preparation and quantum phase estimation to the complete circuit.",
-  "url": "hhl-qiskit/"
+    "title": "HHL Algorithm Implementation in Qiskit",
+    "date": "2025-01-31",
+    "meta": "Independent technical exploration · January 2025",
+    "description": "A step-by-step implementation of the HHL algorithm using Qiskit, from state preparation and quantum phase estimation to the complete circuit.",
+    "url": "hhl-qiskit/"
   }
 ]
