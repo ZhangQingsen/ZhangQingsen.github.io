@@ -38,13 +38,10 @@ try {
   & $py -m pip install -r requirements.txt --quiet
   if ($LASTEXITCODE -ne 0) { throw 'pip install failed' }
 
-  Write-Output '[3/4] Rendering with Quarto (venv Python on PATH)...'
-  # Register the venv's own Jupyter kernel so Quarto executes with the venv Python
-  # (a bare/system kernel would lack the project dependencies).
-  & $py -m pip install ipykernel --quiet
-  & $py -m ipykernel install --prefix $venv --name python3 --quiet
-  $env:JUPYTER_PATH = (Join-Path $venv 'share\jupyter')
-  $env:PATH = (Join-Path $venv 'Scripts') + ';' + $env:PATH
+  Write-Output '[3/4] Rendering with Quarto (venv activated)...'
+  # Standard workflow: activate the venv so Quarto uses its Python/Jupyter
+  # (activation sets VIRTUAL_ENV, which is how Quarto detects the env).
+  & (Join-Path $venv 'Scripts\Activate.ps1')
   # user_exec / background sessions inherit a stale PATH snapshot without the new
   # Quarto install; always use the explicit absolute path.
   $quartoExe = 'C:\Program Files\Quarto\bin\quarto.exe'

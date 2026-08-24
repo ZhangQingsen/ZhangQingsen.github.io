@@ -1,5 +1,6 @@
 # Shared Quarto configuration for all blog posts (applies to subdirectories).
-# Rendered posts inherit the site's visual identity (colors, fonts, header/footer).
+# Each .qmd renders to a single self-contained HTML (embed-resources: true),
+# so no _files/ directories are produced.
 
 project:
   type: default
@@ -13,10 +14,8 @@ format:
     toc-depth: 3
     code-fold: true
     code-tools: true
-    embed-resources: false
+    embed-resources: true
     include-before-body: _includes/header.html
     include-after-body: _includes/footer.html
     fig-format: png
-    fig-width: 7
-    fig-height: 4.5
-    fig-dpi: 110
+    fig-dpi: 96

@@ -17,7 +17,8 @@ Qingsen Zhang 的求职导向个人主页（GitHub Pages 静态站，`https://zh
 - 注意：后台/新会话继承宿主机旧环境快照，PATH 可能不含新 Quarto 路径；脚本一律用全路径调用（已处理）
 - **裸 Python（Python 3.12）禁止全局 pip install**。渲染带 Python 代码的 .qmd 必须用 venv：
   **一个 blog 一个 venv，render 完即删**；纯 Markdown 文档不需要 venv。
-- 每个 blog 目录保留 `requirements.txt`；渲染脚本 `blog/render-series.ps1`（自动建 venv → 装依赖 → 注册 venv 内核 → render → 删 venv），长任务用 `blog/render-bg.ps1` 后台跑 + 轮询日志 `blog/<系列>-render.log`。
+- 每个 blog 目录保留 `requirements.txt`；渲染脚本 `blog/render-series.ps1`（自动建 venv → 装依赖 → **激活 venv** → render → 删 venv），长任务用 `blog/render-bg.ps1` 后台跑 + 轮询日志 `blog/<系列>-render.log`。
+- blog 渲染用 `embed-resources: true`：每篇 = 单文件自包含 HTML（无 `_files/` 目录），图片内嵌。
 
 ## 文件约定（重要）
 
