@@ -14,14 +14,16 @@ Qingsen Zhang 的求职导向个人主页（GitHub Pages 静态站，`https://zh
 - 仓库根目录：`C:\Users\14637\Desktop\shortcuts\ZhangQingsen.github.io`
 - git remote：HTTPS（凭据走 Git Credential Manager，无需 SSH 密钥）
 - Quarto 1.10.18 全局安装：`C:\Program Files\Quarto\bin\quarto.exe`（自带 Pandoc/Deno/Typst）
+- 注意：后台/新会话继承宿主机旧环境快照，PATH 可能不含新 Quarto 路径；脚本一律用全路径调用（已处理）
 - **裸 Python（Python 3.12）禁止全局 pip install**。渲染带 Python 代码的 .qmd 必须用 venv：
   **一个 blog 一个 venv，render 完即删**；纯 Markdown 文档不需要 venv。
-- 每个 blog 目录应保留 `requirements.txt`（便于重建 venv）和 `render.ps1`（建 venv → 装依赖 → render → 删 venv）。
+- 每个 blog 目录保留 `requirements.txt`；渲染脚本 `blog/render-series.ps1`（自动建 venv → 装依赖 → 注册 venv 内核 → render → 删 venv），长任务用 `blog/render-bg.ps1` 后台跑 + 轮询日志 `blog/<系列>-render.log`。
 
 ## 文件约定（重要）
 
 - 所有 HTML 文件为 **CRLF + BOM**：用 edit_file 修改时必须带 `\r\n`，否则匹配失败。
 - 站点语言：英文为主；中文仅用于中文简历/个别页面。
+- blog 只保留现有内容：不恢复 git 历史旧帖；intro-to-python 为 notebook 导出 HTML，保持现状。
 - `_meta/` 已 gitignore（含求职敏感信息），**绝不提交/推送**。
 - 每次重要变更后更新 `_meta/STATUS.md`。
 
@@ -29,7 +31,7 @@ Qingsen Zhang 的求职导向个人主页（GitHub Pages 静态站，`https://zh
 
 - 本地预览：在仓库根目录 `python -m http.server 8000` → http://localhost:8000
 - 提交推送：`git add -A; git commit -m "..."; git push`
-- 渲染单个 qmd：激活对应 venv 后 `quarto render <file>.qmd`
+- 渲染博客系列：`\blog\render-series.ps1 <系列名>`（如 cs5805-fall-2023 / hhl-qiskit）
 
 ## 目录结构
 
@@ -41,8 +43,8 @@ Qingsen Zhang 的求职导向个人主页（GitHub Pages 静态站，`https://zh
 ├── blog/              # 博客索引（fetch posts.json 渲染列表）
 │   ├── posts.json     # 元数据（title/date/meta/description/url）
 │   ├── quantum-computing/  # CS 580Q TA 材料
-│   ├── cs5805-fall-2023/   # ML 课程实验（有 .qmd 源文件在 git 历史中）
-│   ├── hhl-qiskit/         # HHL 算法实现
+│   ├── cs5805-fall-2023/   # ML 课程实验（.qmd 源文件已恢复 + 主题化重渲染）
+│   ├── hhl-qiskit/         # HHL 算法实现（.qmd 源文件已恢复 + 主题化重渲染）
 │   └── intro-to-python/    # Python 教学材料
 ├── assets/images/avatar.png
 ├── AGENTS.md          # 本文件

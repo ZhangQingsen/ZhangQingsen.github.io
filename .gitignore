@@ -5,3 +5,8 @@ _meta/
 .venv/
 __pycache__/
 *.pyc
+
+# 后台渲染日志/标记
+blog/*-render.done
+blog/*-render.log*
+blog/*-render.err.log

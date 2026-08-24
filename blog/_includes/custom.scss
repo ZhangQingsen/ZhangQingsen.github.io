@@ -1,0 +1,65 @@
+/*-- scss:defaults --*/
+$primary: #176b87;
+$link-color: #176b87;
+$body-bg: #f8fafc;
+$body-color: #172033;
+$headings-color: #172033;
+$code-color: #124f65;
+$font-family-sans-serif: "Inter", ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, Helvetica, sans-serif;
+
+/*-- scss:rules --*/
+
+/* Site header, injected via include-before-body */
+.site-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 78px;
+  margin-bottom: 2rem;
+  border-bottom: 1px solid #dce3eb;
+}
+
+.site-header .name {
+  color: #172033;
+  font-size: 1.03rem;
+  font-weight: 750;
+  letter-spacing: -0.01em;
+  text-decoration: none;
+}
+
+.site-header nav {
+  display: flex;
+  align-items: center;
+  gap: 26px;
+}
+
+.site-header nav a {
+  color: #5f6b7a;
+  font-size: 0.94rem;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.site-header nav a:hover,
+.site-header nav a[aria-current="page"] {
+  color: #176b87;
+}
+
+/* Site footer, injected via include-after-body */
+.site-footer {
+  margin-top: 3rem;
+  padding-top: 1rem;
+  border-top: 1px solid #dce3eb;
+  color: #5f6b7a;
+  font-size: 0.9rem;
+}
+
+/* Keep figure/code blocks tidy */
+.figure {
+  margin: 1.5rem 0;
+}
+
+.figure-caption {
+  color: #5f6b7a;
+  font-size: 0.85rem;
+}
