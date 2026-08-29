@@ -10,3 +10,6 @@ __pycache__/
 blog/*-render.done
 blog/*-render.log*
 blog/*-render.err.log
+
+# 本地工具（JD 抓取脚本等，个人用）
+_tools/

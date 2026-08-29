@@ -15,6 +15,7 @@ format:
     code-fold: true
     code-tools: true
     embed-resources: true
+    include-in-header: _includes/fonts.html
     include-before-body: _includes/header.html
     include-after-body: _includes/footer.html
     fig-format: png

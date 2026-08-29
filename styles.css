@@ -1,13 +1,15 @@
 ﻿:root {
   --bg: #f8fafc;
-  --surface: #ffffff;
-  --surface-soft: #f1f5f9;
+  --surface: oklch(0.99 0.008 215);
+  --surface-soft: oklch(0.972 0.012 215);
   --text: #172033;
   --muted: #5f6b7a;
   --line: #dce3eb;
   --accent: #176b87;
   --accent-dark: #124f65;
   --accent-soft: #e7f3f7;
+  --font-display: "Cardo", ui-serif, Georgia, "Times New Roman", serif;
+  --font-body: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, Helvetica, sans-serif;
   --max-width: 1040px;
   --content-width: 760px;
   --shadow: 0 12px 34px rgba(30, 54, 74, 0.08);
@@ -28,11 +30,24 @@ body {
   background:
     radial-gradient(circle at 85% 4%, rgba(23, 107, 135, 0.10), transparent 25rem),
     var(--bg);
-  font-family:
-    Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont,
-    "Segoe UI", Arial, Helvetica, sans-serif;
+  font-family: var(--font-body);
   font-size: 16px;
   line-height: 1.7;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--font-display);
+  font-weight: 700;
+}
+
+.section-heading h2,
+.resume-section > h2,
+.blog-group-title,
+.detail-card h3 {
+  font-family: var(--font-body);
 }
 
 img {
@@ -66,9 +81,9 @@ a:hover {
 
 .name {
   color: var(--text);
-  font-size: 1.03rem;
-  font-weight: 750;
-  letter-spacing: -0.01em;
+  font-family: var(--font-display);
+  font-size: 1.08rem;
+  font-weight: 700;
   text-decoration: none;
 }
 
@@ -111,9 +126,9 @@ nav a[aria-current="page"] {
 
 .hero h1 {
   margin: 0;
-  font-size: clamp(2.65rem, 7vw, 4.6rem);
-  line-height: 1;
-  letter-spacing: -0.055em;
+  font-size: clamp(2.65rem, 7vw, 4.4rem);
+  line-height: 1.05;
+  letter-spacing: -0.01em;
 }
 
 .hero-title {
@@ -124,7 +139,7 @@ nav a[aria-current="page"] {
 }
 
 .hero-description {
-  max-width: 680px;
+  max-width: 65ch;
   margin: 22px 0 0;
   font-size: 1.02rem;
 }
@@ -553,7 +568,7 @@ footer p {
   margin: 0 0 16px;
   font-size: clamp(2.5rem, 6vw, 4rem);
   line-height: 1.05;
-  letter-spacing: -0.05em;
+  letter-spacing: -0.01em;
 }
 
 .page-hero p {
@@ -588,7 +603,7 @@ footer p {
   margin: 0 0 8px;
   font-size: clamp(1.65rem, 4vw, 2.25rem);
   line-height: 1.2;
-  letter-spacing: -0.03em;
+  letter-spacing: -0.01em;
 }
 
 .work-subtitle {
@@ -598,7 +613,7 @@ footer p {
 }
 
 .work-summary {
-  max-width: 760px;
+  max-width: 65ch;
   font-size: 1.02rem;
 }
 
@@ -664,7 +679,7 @@ footer p {
   margin: 0 0 7px;
   font-size: clamp(2.5rem, 6vw, 3.8rem);
   line-height: 1.05;
-  letter-spacing: -0.05em;
+  letter-spacing: -0.01em;
 }
 
 .cv-header p {
