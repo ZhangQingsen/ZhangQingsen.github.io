@@ -8,7 +8,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cardo:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="styles.css?v=20261113">
 </head>
 <body>
   <main class="container">
@@ -38,17 +38,11 @@
         </p>
 
         <p class="hero-description">
-          I'm a computer science PhD candidate at Binghamton University. My
-          research is on 3D face reconstruction from wearable cameras, and I
-          previously worked as a machine vision engineer, building C++/OpenCV
-          inspection systems for lithium-battery production lines. I care
-          about computer vision that works in real industrial environments.
-        </p>
-
-        <p class="hero-description">
-          I am currently a Ph.D. candidate in Prof. Yincheng Jin's lab at
-          Binghamton, working on wearable and egocentric vision (expected
-          graduation May 2028).
+          My research is on 3D face reconstruction from wearable cameras, in
+          Prof. Yincheng Jin's lab (expected graduation May 2028). Before that
+          I was a machine vision engineer, building C++/OpenCV inspection
+          systems for lithium-battery production lines. I care about computer
+          vision that works outside the lab.
         </p>
 
         <div class="actions">
@@ -68,17 +62,19 @@
 
     <section class="home-section">
       <div class="section-heading">
-        <h2>Currently</h2>
+        <h2>Latest</h2>
 
         <div class="section-content">
-          <div class="currently">
-            <p>
-              I am pursuing a Ph.D. in Computer Science at Binghamton
-              University under the supervision of Prof. Yincheng Jin.
-              My research explores wearable and egocentric vision, with an
-              emphasis on generative reconstruction of structured 3D geometry.
-            </p>
-          </div>
+          <!-- Filled from blog/posts.json (newest 3); this static item is the no-JS fallback. -->
+          <ul class="latest" id="latest">
+            <li>
+              <time datetime="2026-11-13">Nov 2026</time>
+              <div>
+                <a href="blog/harvest-pile/">Harvest Pile: A 3D Pile-Sorting Game Prototype</a>
+                <p>A playable 3D match-three prototype: rigid-body tuning, procedural shader patterns, and a Godot-to-Three.js port.</p>
+              </div>
+            </li>
+          </ul>
         </div>
       </div>
     </section>
@@ -150,5 +146,43 @@
       </p>
     </footer>
   </main>
+  <script>
+    (function () {
+      var list = document.getElementById('latest');
+      var MAX = 3;
+      fetch('blog/posts.json')
+        .then(function (r) { return r.json(); })
+        .then(function (posts) {
+          posts.sort(function (a, b) { return a.date < b.date ? 1 : -1; });
+          list.innerHTML = '';
+          posts.slice(0, MAX).forEach(function (p) {
+            var d = new Date(p.date + 'T00:00:00');
+            var li = document.createElement('li');
+            var t = document.createElement('time');
+            t.dateTime = p.date;
+            t.textContent = d.toLocaleDateString('en-US', { month: 'short', year: 'numeric' });
+            var body = document.createElement('div');
+            var a = document.createElement('a');
+            a.href = 'blog/' + p.url;
+            a.textContent = p.title;
+            body.appendChild(a);
+            if (p.extra) {
+              var x = document.createElement('a');
+              x.className = 'latest-extra';
+              x.href = 'blog/' + p.extra.url;
+              x.textContent = p.extra.label;
+              body.appendChild(x);
+            }
+            var desc = document.createElement('p');
+            desc.textContent = p.description;
+            body.appendChild(desc);
+            li.appendChild(t);
+            li.appendChild(body);
+            list.appendChild(li);
+          });
+        })
+        .catch(function () { /* keep the static fallback */ });
+    })();
+  </script>
 </body>
 </html>

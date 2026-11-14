@@ -5,7 +5,8 @@
     "category": "independent",
     "meta": "Independent project · November 2026",
     "description": "A playable 3D match-three prototype: rigid-body tuning, a solvability invariant, procedural shader patterns, a Godot-to-Three.js port, and public-domain music rendered from MIDI.",
-    "url": "harvest-pile/"
+    "url": "harvest-pile/",
+    "extra": { "label": "Play in browser →", "url": "harvest-pile/play/" }
   },
   {
     "title": "HHL Algorithm Implementation in Qiskit",

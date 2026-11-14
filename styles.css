@@ -239,15 +239,58 @@ nav a[aria-current="page"] {
   margin-bottom: 0;
 }
 
-.currently {
-  padding: 24px 26px;
-  border: 1px solid var(--line);
-  border-radius: 16px;
-  background: rgba(255, 255, 255, 0.72);
+/* Latest (auto-filled from blog/posts.json) */
+
+.latest {
+  margin: 0;
+  padding: 0;
+  list-style: none;
 }
 
-.currently strong {
-  color: var(--accent-dark);
+.latest li {
+  display: grid;
+  grid-template-columns: 88px minmax(0, 1fr);
+  gap: 16px;
+  padding: 14px 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.latest li:first-child {
+  padding-top: 0;
+}
+
+.latest li:last-child {
+  border-bottom: 0;
+}
+
+.latest time {
+  color: var(--muted);
+  font-size: 0.86rem;
+  padding-top: 2px;
+  white-space: nowrap;
+}
+
+.latest a {
+  font-weight: 600;
+}
+
+.latest .latest-extra {
+  margin-left: 10px;
+  font-size: 0.86rem;
+  font-weight: 500;
+}
+
+.latest p {
+  margin: 4px 0 0;
+  color: var(--muted);
+  font-size: 0.94rem;
+}
+
+@media (max-width: 560px) {
+  .latest li {
+    grid-template-columns: 1fr;
+    gap: 2px;
+  }
 }
 
 /* Work cards */
