@@ -1,5 +1,13 @@
 [
   {
+    "title": "Harvest Pile: A 3D Pile-Sorting Game Prototype",
+    "date": "2026-11-13",
+    "category": "independent",
+    "meta": "Independent project · November 2026",
+    "description": "A playable 3D match-three prototype: rigid-body tuning, a solvability invariant, procedural shader patterns, a Godot-to-Three.js port, and public-domain music rendered from MIDI.",
+    "url": "harvest-pile/"
+  },
+  {
     "title": "HHL Algorithm Implementation in Qiskit",
     "date": "2025-01-31",
     "category": "independent",
