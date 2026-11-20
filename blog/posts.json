@@ -1,12 +1,27 @@
 [
   {
+    "title": "Harvest Pile, Part 2: Engineering Game Feel for a Pile of Food",
+    "date": "2026-11-20",
+    "category": "independent",
+    "meta": "Independent project · November 2026",
+    "description": "A three-layer game-feel framework applied to a physics pile: hit-stop and squash-then-burst, photographic lighting ratios chosen from a contact sheet, calmer rigid bodies, and four attempts at digging with your finger.",
+    "url": "harvest-pile-game-feel/",
+    "extra": {
+      "label": "Play in browser →",
+      "url": "harvest-pile/play/"
+    }
+  },
+  {
     "title": "Harvest Pile: A 3D Pile-Sorting Game Prototype",
     "date": "2026-11-13",
     "category": "independent",
     "meta": "Independent project · November 2026",
     "description": "A playable 3D match-three prototype: rigid-body tuning, a solvability invariant, procedural shader patterns, a Godot-to-Three.js port, and public-domain music rendered from MIDI.",
     "url": "harvest-pile/",
-    "extra": { "label": "Play in browser →", "url": "harvest-pile/play/" }
+    "extra": {
+      "label": "Play in browser →",
+      "url": "harvest-pile/play/"
+    }
   },
   {
     "title": "HHL Algorithm Implementation in Qiskit",
